@@ -37,6 +37,8 @@ function gamoteca_supports($feature) {
             return true;
         case FEATURE_BACKUP_MOODLE2:
             return true;
+        case FEATURE_NO_VIEW_LINK:
+            return true;
         default:
             return null;
     }
@@ -99,4 +101,42 @@ function gamoteca_delete_instance($id) {
     $DB->delete_records('gamoteca', array('id' => $id));
 
     return true;
+}
+
+/**
+ * Called when viewing course page.
+ *
+ * @param cm_info $coursemodule
+ */
+function gamoteca_cm_info_view(cm_info $coursemodule) {
+    global $DB, $PAGE, $USER, $SITE;
+
+    $output = '';
+
+    if (!($gamoteca = $DB->get_record('gamoteca', array('id' => $coursemodule->instance)))) {
+        return null;
+    }
+
+    $linktitle = $coursemodule->name;
+    $url = $gamoteca->gamotecaurl;
+
+    // Additional params to pass to Gamoteca - Site Shortname, Course ID, Course Module ID and User ID.
+    $additionalparams = $SITE->shortname . '|' . $coursemodule->course . '|' . $coursemodule->id . '|' . $USER->id;
+
+    if (parse_url($url, PHP_URL_QUERY)) {
+        $url .= '&addvars=' . $additionalparams;
+    } else {
+        $url .= '?addvars=' . $additionalparams;
+    }
+
+    $activitylink = html_writer::empty_tag('img', array('src' => $coursemodule->get_icon_url(),
+        'class' => 'iconlarge activityicon', 'alt' => ' ', 'role' => 'presentation')) .
+        html_writer::tag('span', $linktitle, array('class' => 'instancename'));
+    $newwindowmsg = get_string('openednewwindow', 'mod_gamoteca');
+    $linkid = 'mod_gamoteca' . $coursemodule->instance;
+    $output = html_writer::link('javascript:void(0);', $activitylink,
+        array('id' => $linkid));
+    $PAGE->requires->js_call_amd('mod_gamoteca/gamoteca', 'initialise', array($linkid, $url, $newwindowmsg));
+
+    $coursemodule->set_content($output);
 }

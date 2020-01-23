@@ -36,3 +36,4 @@ $string['name'] = 'Gamoteca game';
 $string['name_help'] = 'Gamoteca game title';
 $string['gamotecaurl'] = 'Gamoteca game URL';
 $string['gamotecaurl_help'] = 'URL to the game on Gamoteca';
+$string['openednewwindow'] = 'Gamoteca game has been opened in new window.';
