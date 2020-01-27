@@ -39,6 +39,8 @@ function gamoteca_supports($feature) {
             return true;
         case FEATURE_NO_VIEW_LINK:
             return true;
+        case FEATURE_COMPLETION_HAS_RULES:
+            return true;
         default:
             return null;
     }
@@ -139,4 +141,85 @@ function gamoteca_cm_info_view(cm_info $coursemodule) {
     $PAGE->requires->js_call_amd('mod_gamoteca/gamoteca', 'initialise', array($linkid, $url, $newwindowmsg));
 
     $coursemodule->set_content($output);
+}
+
+/**
+ * Obtains the automatic completion state for this face to face activity based on any conditions
+ * in gamoteca settings.
+ *
+ * @param object $course Course
+ * @param object $cm Course-module
+ * @param int $userid User ID
+ * @param bool $type Type of comparison (or/and; can be used as return value if no conditions)
+ * @return bool True if completed, false if not. (If no conditions, then return
+ *   value depends on comparison type)
+ */
+function gamoteca_get_completion_state($course, $cm, $userid, $type) {
+    global $CFG, $DB;
+
+    require_once($CFG->libdir . '/completionlib.php');
+
+    if (empty($userid)) {
+        return false;
+    }
+
+    $result = $type;
+
+    // Get gamoteca game details.
+    $gamoteca = $DB->get_record('gamoteca', array('id' => $cm->instance), '*', MUST_EXIST);
+    if ($gamoteca->completionscoredisabled == 0 || $gamoteca->completionstatusdisabled == 0) {
+        $result = false;
+
+        // Get gamoteca game status for the user.
+        if ($record = $DB->get_record('gamoteca_data', array('gameid' => $gamoteca->id, 'userid' => $userid))) {
+            $checkscore = false;
+            $checkstatus = false;
+
+            if ($gamoteca->completionscoredisabled == 0 && $record->score >= $gamoteca->completionscorerequired) {
+                $checkscore = true;
+            }
+
+            if ($gamoteca->completionstatusdisabled == 0 && $gamoteca->completionstatusrequired == $record->status) {
+                $checkstatus = true;
+            }
+
+            if ($gamoteca->completionscoredisabled == 0 && $gamoteca->completionstatusdisabled == 0) {
+                if ($checkscore && $checkstatus) {
+                    $result = true;
+                }
+            } else {
+                if ($checkscore || $checkstatus) {
+                    $result = true;
+                }
+            }
+        }
+    }
+
+    return $result;
+}
+
+/**
+ * Sets activity completion state
+ *
+ * @param stdClass $gamoteca object
+ * @param int $userid User ID
+ * @param int $completionstate Completion state
+ */
+function gamoteca_set_completion($gamoteca, $userid, $completionstate = COMPLETION_COMPLETE) {
+    $course = new stdClass();
+    $course->id = $gamoteca->course;
+    $completion = new completion_info($course);
+
+    // Check if completion is enabled site-wide, or for the course.
+    if (!$completion->is_enabled()) {
+        return;
+    }
+
+    $cm = get_coursemodule_from_instance('gamoteca', $gamoteca->id, $gamoteca->course);
+    if (empty($cm) || !$completion->is_enabled($cm)) {
+        return;
+    }
+
+    $completion->update_state($cm, $completionstate, $userid);
+    $completion->invalidatecache($gamoteca->course, $userid, true);
 }
