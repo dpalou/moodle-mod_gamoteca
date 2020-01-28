@@ -43,18 +43,45 @@ class backup_gamoteca_activity_structure_step extends backup_activity_structure_
         $userinfo = $this->get_setting_value('userinfo');
 
         // Replace with the attributes and final elements that the element will handle.
-        // TODO
-        $attributes = array();
-        $final_elements = array();
-        $root = new backup_nested_element('mod_gamoteca', $attributes, $final_elements);
+        $attributes = array('id');
+        $finalelements = array('course',
+                                'name',
+                                'timecreated',
+                                'timemodified',
+                                'intro',
+                                'introformat',
+                                'gamotecaurl',
+                                'completionscoredisabled',
+                                'completionscorerequired',
+                                'completionstatusdisabled',
+                                'completionstatusrequired',
+                                'gametime');
+        $root = new backup_nested_element('gamoteca', $attributes, $finalelements);
 
         // Build the tree with these elements with $root as the root of the backup tree.
+        $childattributes = array('id');
+        $childfinalelements = array('userid',
+                                    'gameid',
+                                    'score',
+                                    'status',
+                                    'timespent',
+                                    'timecreated',
+                                    'timemodified');
+        $child = new backup_nested_element('gamoteca_data', $childattributes, $childfinalelements);
+        $root->add_child($child);
 
         // Define the source tables for the elements.
+        $root->set_source_table('gamoteca', array('id' => backup::VAR_ACTIVITYID));
+
+        if ($userinfo) {
+            $child->set_source_table('gamoteca_data', array('gameid' => backup::VAR_PARENTID), 'id ASC');
+        }
 
         // Define id annotations.
+        $child->annotate_ids('user', 'userid');
 
         // Define file annotations.
+        $root->annotate_files('mod_gamoteca', 'intro', null); // This file area hasn't got itemid.
 
         return $this->prepare_activity_structure($root);
     }

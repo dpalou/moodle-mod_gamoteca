@@ -43,13 +43,53 @@ class restore_gamoteca_activity_structure_step extends restore_activity_structur
         $paths = array();
         $userinfo = $this->get_setting_value('userinfo');
 
+        $paths[] = new restore_path_element('gamoteca', '/activity/gamoteca');
+        if ($userinfo) {
+            $paths[] = new restore_path_element('gamoteca_data', '/activity/gamoteca/gamoteca_data');
+        }
+
         return $this->prepare_activity_structure($paths);
+    }
+
+    /**
+     * Defines the structure of gamoteca table to be restored.
+     *
+     */
+    protected function process_gamoteca($data) {
+        global $DB;
+
+        $data = (object)$data;
+        $oldid = $data->id;
+
+        $data->course = $this->get_courseid();
+        $data->timemodified = $this->apply_date_offset($data->timemodified);
+
+        // Insert the gamoteca record.
+        $newitemid = $DB->insert_record('gamoteca', $data);
+        // Immediately after inserting "activity" record, call this.
+        $this->apply_activity_instance($newitemid);
+    }
+
+    /**
+     * Defines the structure of the child table to be restored.
+     *
+     */
+    protected function process_gamoteca_data($data) {
+        global $DB;
+
+        $data = (object)$data;
+
+        $data->gameid = $this->get_new_parentid('gamoteca');
+        $data->userid = $this->get_mappingid('user', $data->userid);
+
+        $newitemid = $DB->insert_record('gamoteca_data', $data);
     }
 
     /**
      * Defines post-execution actions.
      */
     protected function after_execute() {
-        // No particular settings for this activity
+        // Add gamoteca related files, no need to match by itemname (just internally handled context).
+        $this->add_related_files('mod_gamoteca', 'intro', null);
     }
 }

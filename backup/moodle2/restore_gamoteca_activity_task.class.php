@@ -61,6 +61,7 @@ class restore_gamoteca_activity_task extends restore_activity_task {
         $contents = array();
 
         // Define the contents.
+        $contents[] = new restore_decode_content('gamoteca', array('intro'), 'gamoteca');
 
         return $contents;
     }
@@ -74,6 +75,8 @@ class restore_gamoteca_activity_task extends restore_activity_task {
         $rules = array();
 
         // Define the rules.
+        $rules[] = new restore_decode_rule('GAMOTECAINDEX', '/mod/gamoteca/index.php?id=$1', 'course');
+        $rules[] = new restore_decode_rule('GAMOTECAVIEWBYID', '/mod/gamoteca/view.php?id=$1', 'course_module');
 
         return $rules;
     }
@@ -89,6 +92,9 @@ class restore_gamoteca_activity_task extends restore_activity_task {
         $rules = array();
 
         // Define the rules.
+        $rules[] = new restore_log_rule('gamoteca', 'add', 'view.php?id={course_module}', '{gamoteca}');
+        $rules[] = new restore_log_rule('gamoteca', 'update', 'view.php?id={course_module}', '{gamoteca}');
+        $rules[] = new restore_log_rule('gamoteca', 'view', 'view.php?id={course_module}', '{gamoteca}');
 
         return $rules;
     }
