@@ -60,7 +60,7 @@ class mod_gamoteca_mod_form extends moodleform_mod {
         $mform->addHelpButton('name', 'name', 'mod_gamoteca');
 
         $mform->addElement('url', 'gamotecaurl', get_string('gamotecaurl', 'mod_gamoteca'), array('size'=>'255'), array('usefilepicker' => false));
-        $mform->setType('gamotecaurl', PARAM_RAW_TRIMMED);
+        $mform->setType('gamotecaurl', PARAM_URL);
         $mform->addRule('gamotecaurl', null, 'required', null, 'client');
 
         $this->standard_intro_elements();
@@ -147,6 +147,28 @@ class mod_gamoteca_mod_form extends moodleform_mod {
     }
 
     /**
+     * Form validation
+     *
+     * @param array $data data from the form.
+     * @param array $files files uploaded.
+     *
+     * @return array of errors.
+     */
+    public function validation($data, $files) {
+        $errors = parent::validation($data, $files);
+
+        if (!empty($data['gamotecaurl'])) {
+            $url = $data['gamotecaurl'];
+
+            // Check if URL starts with either http or https.
+            if (!preg_match('|^[a-z]+://|i', $url) || !preg_match('|^https?:|i', $url)) {
+                $errors['gamotecaurl'] = get_string('invalidurl', 'mod_gamoteca');
+            }
+        }
+        return $errors;
+    }
+
+    /**
      * Return submitted data if properly submitted or returns NULL if validation fails or
      * if there is no submitted data.
      *
@@ -158,10 +180,10 @@ class mod_gamoteca_mod_form extends moodleform_mod {
             return $data;
         }
 
-        if ($data->completionscoredisabled == 1) {
+        if (isset($data->completionscoredisabled) && $data->completionscoredisabled == 1) {
             $data->completionscorerequired = 0;
         }
-        if ($data->completionstatusdisabled == 1) {
+        if (isset($data->completionstatusdisabled) && $data->completionstatusdisabled == 1) {
             $data->completionstatusrequired = '';
         }
 

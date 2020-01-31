@@ -86,4 +86,6 @@ function xmldb_gamoteca_upgrade($oldversion=0) {
         // Gamoteca savepoint reached.
         upgrade_mod_savepoint(true, 2020012101, 'gamoteca');
     }
+
+    return true;
 }

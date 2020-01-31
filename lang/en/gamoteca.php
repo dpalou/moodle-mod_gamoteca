@@ -36,6 +36,7 @@ $string['name'] = 'Gamoteca game';
 $string['name_help'] = 'Gamoteca game title';
 $string['gamotecaurl'] = 'Gamoteca game URL';
 $string['gamotecaurl_help'] = 'URL to the game on Gamoteca';
+$string['invalidurl'] = 'Entered URL is invalid. Should start with http:// or https://';
 $string['openednewwindow'] = 'Gamoteca game has been opened in new window.';
 $string['completionscorerequired'] = 'Game score required';
 $string['completionscorerequired_help'] = 'Gamoteca game score required to mark this activity as complete';
