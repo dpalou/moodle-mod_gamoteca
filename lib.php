@@ -126,7 +126,15 @@ function gamoteca_cm_info_view(cm_info $coursemodule) {
     $additionalparams = $SITE->shortname . '|' . $coursemodule->course . '|' . $coursemodule->id . '|' . $USER->id;
 
     if (parse_url($url, PHP_URL_QUERY)) {
-        $url .= '&addvars=' . $additionalparams;
+        $parsedurl = parse_url($url);
+        parse_str($parsedurl['query'], $query);
+        // Gamoteca URL should have link param. Update this link param by appending the additional params.
+        if (isset($query['link'])) {
+            $replacelinkwith = $query['link'] . '?addvars=' . $additionalparams;
+            $url = str_replace($query['link'], $replacelinkwith, $url);
+        } else {
+            $url .= '&addvars=' . $additionalparams;
+        }
     } else {
         $url .= '?addvars=' . $additionalparams;
     }
