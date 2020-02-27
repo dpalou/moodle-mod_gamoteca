@@ -139,16 +139,47 @@ function gamoteca_cm_info_view(cm_info $coursemodule) {
         $url .= '?addvars=' . $additionalparams;
     }
 
+    // Get user's game status.
+    $gamestate = gamoteca_getuser_game_state($coursemodule->instance, $USER->id);
+
     $activitylink = html_writer::empty_tag('img', array('src' => $coursemodule->get_icon_url(),
-        'class' => 'iconlarge activityicon', 'alt' => ' ', 'role' => 'presentation')) .
-        html_writer::tag('span', $linktitle, array('class' => 'instancename'));
+        'class' => 'iconlarge activityicon', 'alt' => $gamestate, 'title' => $gamestate, 'role' => 'presentation')) .
+        html_writer::tag('span', $linktitle, array('class' => 'gameinstancename'));
     $newwindowmsg = get_string('openednewwindow', 'mod_gamoteca');
     $linkid = 'mod_gamoteca' . $coursemodule->instance;
     $output = html_writer::link('javascript:void(0);', $activitylink,
         array('id' => $linkid));
+
+    $output .= html_writer::tag('p', get_string('gamotecanote', 'mod_gamoteca'), array('class' => 'gamotecanote'));
+
     $PAGE->requires->js_call_amd('mod_gamoteca/gamoteca', 'initialise', array($linkid, $url, $newwindowmsg));
 
     $coursemodule->set_content($output);
+}
+
+/**
+ * Obtains the user's game status for the selected gamoteca module.
+ *
+ * @param $gameid int Game ID
+ * @param $userid int User ID
+ * @return string - Status, Score and Time spent
+ */
+function gamoteca_getuser_game_state($gameid, $userid) {
+    global $DB;
+
+    $defaultstate['status'] = get_string('defaultstatus', 'mod_gamoteca');
+    $defaultstate['score'] = get_string('defaultscore', 'mod_gamoteca');
+    $defaultstate['timespent'] = get_string('defaulttimespent', 'mod_gamoteca');
+
+    $returnvar = get_string('usergamestate', 'mod_gamoteca', $defaultstate);
+    if ($record = $DB->get_record('gamoteca_data', array('gameid' => $gameid, 'userid' => $userid))) {
+        $gamestate['status'] = $record->status;
+        $gamestate['score'] = $record->score;
+        $gamestate['timespent'] = $record->timespent;
+        $returnvar = get_string('usergamestate', 'mod_gamoteca', $gamestate);
+    }
+
+    return $returnvar;
 }
 
 /**
