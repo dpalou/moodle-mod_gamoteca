@@ -28,6 +28,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $string['pluginname'] = 'Gamoteca';
 $string['modulename'] = 'Gamoteca';
+$string['modulename_help'] = 'The Gamoteca activity module allows for the integration of learning games developed on Gamoteca.com into your courses (speak to the Kaya Team for more information about game-based learning).';
 $string['modulenameplural'] = 'Gamoteca';
 $string['gamoteca:addinstance'] = 'Add link to a game on Gamoteca';
 $string['gamoteca:view'] = 'View link to game on Gamoteca';

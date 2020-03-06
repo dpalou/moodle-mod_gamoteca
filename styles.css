@@ -6,3 +6,7 @@ span.gameinstancename {
 p.gamotecanote {
     padding-top: 5px;
 }
+
+.gamotecaicon {
+   content:url([[pix:gamoteca|icon]]);
+}
