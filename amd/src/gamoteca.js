@@ -42,7 +42,7 @@ define(['jquery'], function($, linkid, url, windowmessage) {
     };
 
     return {
-        initialise: function (linkid, url, windowmessage) {
+        initialise: function (linkid, url, windowmessage, wwwroot, instanceid) {
             $('#' + linkid).on("click", function(e) {
                 e.preventDefault();
                 if (gamotecawindow === undefined) {
@@ -53,6 +53,14 @@ define(['jquery'], function($, linkid, url, windowmessage) {
                         if(gamotecawindow) {
                             checkWindowClosed(gamotecawindow);
                         }
+                    });
+
+                    var args = {
+                        id: instanceid
+                    };
+                    $.post({
+                        url: wwwroot + "/mod/gamoteca/ajax.php",
+                        data: args
                     });
 
                     gamotecawindow = window.open(url, 'Popup');

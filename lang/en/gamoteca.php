@@ -44,6 +44,13 @@ $string['defaultstatus'] = 'Not started';
 $string['defaultscore'] = 'NA';
 $string['defaulttimespent'] = 'NA';
 $string['gamotecanote'] = '<strong>Note</strong>: Please use the Kaya (K) button when you Register or Sign in on Gamoteca, so your account is linked to Kaya and your game progress and completion will be updated here too.';
+$string['event:gamoteca_created'] = 'Gamoteca created';
+$string['event:gamoteca_created_desc'] = 'The gamoteca module with moduleid {$a->coursemoduleid} in course {$a->courseid} has been created.';
+$string['event:gamoteca_deleted'] = 'Gamoteca deleted';
+$string['event:gamoteca_deleted_desc'] = 'The gamoteca module with moduleid {$a->coursemoduleid} in course {$a->courseid} has been deleted.';
+$string['event:gamoteca_updated'] = 'Gamoteca updated';
+$string['event:gamoteca_updated_desc'] = 'The gamoteca module with moduleid {$a->coursemoduleid} in course {$a->courseid} has been updated.';
+
 $string['completionscorerequired'] = 'Game score required';
 $string['completionscorerequired_help'] = 'Gamoteca game score required to mark this activity as complete';
 $string['completionstatusrequired'] = 'Game status required';

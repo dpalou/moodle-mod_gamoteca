@@ -15,18 +15,23 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Plugin version and other meta-data are defined here.
+ * Log gamoteca viewed entry.
  *
  * @package     mod_gamoteca
  * @author      Jackson D'souza <jackson.dsouza@catalyst-eu.net>
- * @copyright   2020 Catalyst IT Europe (http://www.catalyst-eu.net/)
+ * @copyright   2020 onwards Catalyst IT Europe (http://www.catalyst-eu.net/)
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+require(__DIR__.'/../../config.php');
+require_once(__DIR__.'/lib.php');
 
-$plugin->component = 'mod_gamoteca';
-$plugin->release = '0.1.1';
-$plugin->version = 2020012103;
-$plugin->requires = 2017051500;
-$plugin->maturity = MATURITY_ALPHA;
+$id = required_param('id', PARAM_INT);
+
+$cm             = get_coursemodule_from_id('gamoteca', $id, 0, false, MUST_EXIST);
+$course         = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
+$moduleinstance = $DB->get_record('gamoteca', array('id' => $cm->instance), '*', MUST_EXIST);
+$context = context_module::instance($cm->id);
+
+require_login($course, true, $cm);
+gamoteca_view($moduleinstance, $course, $cm, $context);

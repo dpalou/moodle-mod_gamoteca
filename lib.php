@@ -23,6 +23,11 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use mod_gamoteca\event\course_module_viewed;
+use mod_gamoteca\event\gamoteca_created;
+use mod_gamoteca\event\gamoteca_deleted;
+use mod_gamoteca\event\gamoteca_updated;
+
 defined('MOODLE_INTERNAL') || die();
 
 /**
@@ -64,6 +69,12 @@ function gamoteca_add_instance($moduleinstance, $mform = null) {
 
     $id = $DB->insert_record('gamoteca', $moduleinstance);
 
+    $event = gamoteca_created::create([
+        'objectid' => $id,
+        'context' => context_module::instance($moduleinstance->coursemodule),
+    ]);
+    $event->trigger();
+
     return $id;
 }
 
@@ -83,6 +94,12 @@ function gamoteca_update_instance($moduleinstance, $mform = null) {
     $moduleinstance->timemodified = time();
     $moduleinstance->id = $moduleinstance->instance;
 
+    $event = gamoteca_updated::create([
+        'objectid' => $moduleinstance->id,
+        'context' => context_module::instance($moduleinstance->coursemodule),
+    ]);
+    $event->trigger();
+
     return $DB->update_record('gamoteca', $moduleinstance);
 }
 
@@ -100,9 +117,53 @@ function gamoteca_delete_instance($id) {
         return false;
     }
 
+    $moduleid = $DB->get_record('modules', ['name' => 'gamoteca'], 'id')->id;
+    $params = [
+        'module' => $moduleid,
+        'instance' => $id,
+    ];
+    $coursemoduleid = $DB->get_record('course_modules', $params, 'id')->id;
+
+    $event = gamoteca_deleted::create([
+        'objectid' => $id,
+        'context' => context_module::instance($coursemoduleid),
+    ]);
+    $event->trigger();
+
     $DB->delete_records('gamoteca', array('id' => $id));
 
     return true;
+}
+
+/**
+ * Mark the activity completed (if required) and trigger the course_module_viewed event.
+ *
+ * @param stdClass $gamoteca gamoteca object
+ * @param stdClass $course   course object
+ * @param stdClass $cm       course module object
+ * @param stdClass $context  context object
+ * @since Moodle 3.0
+ */
+function gamoteca_view($gamoteca, $course, $cm, $context) {
+    global $CFG;
+
+    require_once($CFG->libdir . '/completionlib.php');
+
+    // Trigger course_module_viewed event.
+    $params = array(
+        'context' => $context,
+        'objectid' => $gamoteca->id
+    );
+
+    $event = course_module_viewed::create($params);
+    $event->add_record_snapshot('course_modules', $cm);
+    $event->add_record_snapshot('course', $course);
+    $event->add_record_snapshot('gamoteca', $gamoteca);
+    $event->trigger();
+
+    // Completion.
+    $completion = new completion_info($course);
+    $completion->set_module_viewed($cm);
 }
 
 /**
@@ -111,7 +172,7 @@ function gamoteca_delete_instance($id) {
  * @param cm_info $coursemodule
  */
 function gamoteca_cm_info_view(cm_info $coursemodule) {
-    global $DB, $PAGE, $USER, $SITE;
+    global $CFG, $DB, $PAGE, $USER, $SITE;
 
     $output = '';
 
@@ -152,7 +213,8 @@ function gamoteca_cm_info_view(cm_info $coursemodule) {
 
     $output .= html_writer::tag('p', get_string('gamotecanote', 'mod_gamoteca'), array('class' => 'gamotecanote'));
 
-    $PAGE->requires->js_call_amd('mod_gamoteca/gamoteca', 'initialise', array($linkid, $url, $newwindowmsg));
+    $PAGE->requires->js_call_amd('mod_gamoteca/gamoteca', 'initialise',
+                                    array($linkid, $url, $newwindowmsg, $CFG->wwwroot, $coursemodule->id));
 
     $coursemodule->set_content($output);
 }
