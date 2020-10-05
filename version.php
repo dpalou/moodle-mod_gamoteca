@@ -30,3 +30,6 @@ $plugin->release = '0.1.1';
 $plugin->version = 2020012103;
 $plugin->requires = 2017051500;
 $plugin->maturity = MATURITY_ALPHA;
+$plugin->dependencies = array(
+    'local_oauth' => 2016021600
+);
