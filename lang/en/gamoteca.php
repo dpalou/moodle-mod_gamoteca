@@ -28,7 +28,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $string['pluginname'] = 'Gamoteca';
 $string['modulename'] = 'Gamoteca';
-$string['modulename_help'] = 'The Gamoteca activity module allows for the integration of learning games developed on Gamoteca.com into your courses (speak to the Kaya Team for more information about game-based learning).';
+$string['modulename_help'] = 'The Gamoteca activity module allows for the integration of learning games developed on Gamoteca.com into your courses';
 $string['modulenameplural'] = 'Gamoteca';
 $string['gamoteca:addinstance'] = 'Add link to a game on Gamoteca';
 $string['gamoteca:view'] = 'View link to game on Gamoteca';
@@ -43,7 +43,7 @@ $string['usergamestate'] = 'Status: {$a->status} / Score: {$a->score} / Time spe
 $string['defaultstatus'] = 'Not started';
 $string['defaultscore'] = 'NA';
 $string['defaulttimespent'] = 'NA';
-$string['gamotecanote'] = '<strong>Note</strong>: Please use the Kaya (K) button when you Register or Sign in on Gamoteca, so your account is linked to Kaya and your game progress and completion will be updated here too.';
+$string['gamotecanote'] = '<strong>Note</strong>: Please use the (…) button, and then choose your organisation when you Register or Sign in on Gamoteca, so your account is linked to this platform and your game progress and completion will be updated here too.';
 $string['event:gamoteca_created'] = 'Gamoteca created';
 $string['event:gamoteca_created_desc'] = 'The gamoteca module with moduleid {$a->coursemoduleid} in course {$a->courseid} has been created.';
 $string['event:gamoteca_deleted'] = 'Gamoteca deleted';
