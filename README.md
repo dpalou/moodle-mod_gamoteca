@@ -18,18 +18,19 @@ Site Code (to identify the Moodle that the link is coming from)
 
 The following webservice enable's users game data to be sent from Gamoteca to the LMS:
 
-The endpoint to this Web service is: /webservice/rest/server.php?wstoken=<TOKEN>&wsfunction=gamoteca
+The endpoint to this Web service is: /webservice/rest/server.php?wstoken=[TOKEN]&wsfunction=gamoteca
 
 The required parameter is 'games' which should be an array of arrays. The required keys in the child arrays for games are: courseid, gameid, userid, score, status and timespent.
 
-games[0][courseid] - courseid should be numeric - <COURSE ID>
-games[0][gameid] - gameid should be numeric - <COURSE MODULE ID>
-games[0][userid] - userid should be numeric - <USER ID>
-games[0][score] - score should be numeric
-games[0][status] - status should be string
-games[0][timespent] - timespent should be string
+* games[0][courseid] - courseid should be numeric - [COURSE ID]
+* games[0][gameid] - gameid should be numeric - [COURSE MODULE ID]
+* games[0][userid] - userid should be numeric - [USER ID]
+* games[0][score] - score should be numeric
+* games[0][status] - status should be string
+* games[0][timespent] - timespent should be string
 
-Webservice <TOKEN> needs to be generated and securely shared with Gamoteca.
+
+Webservice [TOKEN] needs to be generated and securely shared with Gamoteca.
 
 ## DEPENDENCY ##
 
@@ -40,9 +41,8 @@ Add the plugin and go to: /local/oauth/index.php
 Click on 'Add new client'
 
 On the 'OAuth provider' screen set the following:
-
-Client identifier: gamoteca
-Redirect URL: <GAMOTECA URL>
+* Client identifier: gamoteca
+* Redirect URL: [GAMOTECA URL]
 
 ## License ##
 
@@ -58,4 +58,4 @@ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with
-this program. If not, see <http://www.gnu.org/licenses/>.
+this program. If not, see [http://www.gnu.org/licenses/].

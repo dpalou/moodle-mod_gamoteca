@@ -30,6 +30,7 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->libdir . "/externallib.php");
 require_once(__DIR__.'/../../lib.php');
 
+use completion_info;
 use context_course;
 use external_api;
 use external_function_parameters;
@@ -109,6 +110,16 @@ class gamotecaupdate extends external_api {
                         $thisrecord['message'] = 'User data added';
                     }
                     $thisrecord['updated'] = true;
+                    // Update course completion status.
+                    $course = new stdClass();
+                    $course->id = $game['courseid'];
+                    $completion = new completion_info($course);
+                    if ($completion->is_enabled() && $completion->is_enabled($cm)) {
+                        gamoteca_get_completion_state($course, $cm, $game['userid'], false);
+                        $completion->update_state($cm, $completionstate, $game['userid']);
+                        $completion->invalidatecache($gamoteca->course, $userid, true);
+                    }
+
                 } else {
                     $thisrecord['updated'] = false;
                     $thisrecord['message'] = 'Cannot find Gamoteca game details in this course';
