@@ -42,8 +42,9 @@ function gamoteca_supports($feature) {
             return true;
         case FEATURE_BACKUP_MOODLE2:
             return true;
-        case FEATURE_NO_VIEW_LINK:
-            return true;
+            //Rimosso per incompatibilità con mobile, da capire le conseguenze
+        // case FEATURE_NO_VIEW_LINK:
+        //     return true;
         case FEATURE_COMPLETION_HAS_RULES:
             return true;
         default:
@@ -175,7 +176,6 @@ function gamoteca_cm_info_view(cm_info $coursemodule) {
     global $CFG, $DB, $PAGE, $USER, $SITE;
 
     $output = '';
-
     if (!($gamoteca = $DB->get_record('gamoteca', array('id' => $coursemodule->instance)))) {
         return null;
     }
@@ -215,7 +215,6 @@ function gamoteca_cm_info_view(cm_info $coursemodule) {
 
     $PAGE->requires->js_call_amd('mod_gamoteca/gamoteca', 'initialise',
                                     array($linkid, $url, $newwindowmsg, $CFG->wwwroot, $coursemodule->id));
-
     $coursemodule->set_content($output);
 }
 
