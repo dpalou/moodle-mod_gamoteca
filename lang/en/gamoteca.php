@@ -56,3 +56,5 @@ $string['completionscorerequired_help'] = 'Gamoteca game score required to mark 
 $string['completionstatusrequired'] = 'Game status required';
 $string['completionstatusrequired_help'] = 'Gamoteca game status required to mark this activity as complete';
 $string['completionstatus'] = 'Passed';
+$string['gameotecatextmobile'] = 'Gamoteca game will be launched in the Gamoteca app. For an optimal experience, download the Gamoteca app from the app store before launching the game.';
+$string['gameotecatextmobilepost'] = 'Note: To ensure your game progress is updated in eCampus, sign in with your ITCILO login details on Gamoteca.';

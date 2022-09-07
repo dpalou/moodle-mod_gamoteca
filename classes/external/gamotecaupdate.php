@@ -28,6 +28,7 @@ namespace mod_gamoteca\external;
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . "/externallib.php");
+require_once($CFG->libdir . '/completionlib.php');
 require_once(__DIR__.'/../../lib.php');
 
 use completion_info;
@@ -116,8 +117,9 @@ class gamotecaupdate extends external_api {
                     $completion = new completion_info($course);
                     if ($completion->is_enabled() && $completion->is_enabled($cm)) {
                         gamoteca_get_completion_state($course, $cm, $game['userid'], false);
-                        $completion->update_state($cm, $completionstate, $game['userid']);
-                        $completion->invalidatecache($gamoteca->course, $userid, true);
+                        //$completion->update_state($cm, $completionstate, $game['userid']);
+                        $completion->update_state($cm, COMPLETION_COMPLETE, $game['userid']);
+                        //$completion->invalidatecache($gamoteca->course, $game['userid'], true);
                     }
 
                 } else {

@@ -42,6 +42,5 @@ $functions = array(
         'description'   => 'Update user activity completion data',
         'type'          => 'write'
     )
+
 );
-
-
