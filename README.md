@@ -1,22 +1,21 @@
 # Gamoteca #
+Gamoteca is a human-connected, multi-player, creator platform and learner app to make learning fun, interactive and more human. 
 
-Gamoteca - Moodle / Totara (LMS) integration
+Access the Creator platform at: https://www.gamoteca.com/ and download the Learner app from the Apple App or Google Play stores.
 
-This plugin allows admin users to create a new activity which provides a link
-to a game on Gamoteca website / mobile application.
+# Gamoteca - Moodle / Totara (LMS) integration #
 
-It will also include a web service which will be allowed accessed to Gamoteca to
-send user data i.e. game progress ( Not-started/In-Progress/Completed ), Score,
-time spent, etc. back to the LMS
+This plugin allows course creatorsadmin users to addcreate a new activity within a course which provides a progress-trackable link to a learning experience (game) on the Gamoteca website / mobile application.
 
-The link to the Gamoteca game will include the following data:
-Module ID
-User ID
-Site Code (to identify the Moodle that the link is coming from)
+It will also includes a web service which will be allowed accesssed to Gamoteca to send user data i.e. game progress ( Not-started/In-Progress/Completed ), Score, time spent, etc. back to the LMS.
 
-## WEBSERVICE ##
+The link to the Gamoteca game will include the following data: Module ID User ID Site Code (to identify the Moodle site that the link is coming from)
 
-The following webservice enable's users game data to be sent from Gamoteca to the LMS:
+Read more about how the integration works for Creators: https://intercom.help/gamoteca/en/articles/4770544-gamoteca-s-lms-integration 
+
+## Webservice ##
+
+The following webservice enablesenable's learnersusers progressgame data to be sent from Gamoteca to the LMS:
 
 The endpoint to this Web service is: /webservice/rest/server.php?wstoken=[TOKEN]&wsfunction=gamoteca
 
@@ -32,7 +31,9 @@ The required parameter is 'games' which should be an array of arrays. The requir
 
 Webservice [TOKEN] needs to be generated and securely shared with Gamoteca.
 
-## DEPENDENCY ##
+## O-Auth DEPENDENCY ##
+
+The Gamoteca plugin requires the O-Auth plugin to enable the learner to login to Gamoteca using their Moodle/Totara credentials. This is a requirement to authenticate the user via the web service and for the progress tracking to work.
 
 local/oauth (https://github.com/projectestac/moodle-local_oauth) plugin for authenticating users via Gamoteca.
 
@@ -46,7 +47,10 @@ On the 'OAuth provider' screen set the following:
 
 ## License ##
 
-2020 Catalyst IT Europe (http://www.catalyst-eu.net/)
+The plugin is maintained by Technovatio Limited (Gamoteca), UK. 
+Moodle mobile compatibility was added by the International Training Centre of the ILO (ITCILO) in 2021.
+
+The plugin was originally developed in 2020 by Catalyst IT Europe (http://www.catalyst-eu.net/)
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
