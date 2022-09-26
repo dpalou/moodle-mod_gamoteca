@@ -1,0 +1,38 @@
+{{=<% %>=}}
+<div>
+    <core-course-module-description description="<% gamoteca.intro %>" component="mod_gamoteca" componentId="<% cmid %>"></core-course-module-description>
+
+
+    <ion-item  text-center>
+        <img src="<% logogamoteca %>" core-external-content component="mod_gamoteca" style="width:250px">
+    </ion-item>
+    <ion-item text-wrap text-center>
+   	    <p>
+    		{{ 'plugin.mod_gamoteca.gameotecatextmobile' | translate }}
+    	</p>
+    </ion-item>
+    <ion-item text-center>
+        <a href="<% link %>" target="_blank" core-link style="position: relative;
+        font-size: 12px!important;
+        line-height: 50px;
+        text-transform: uppercase;
+        text-decoration: none;
+        letter-spacing: .02em;
+        font-weight: 700;
+        color: #4d4d4d!important;
+        border-color: rgba(0,0,0,.2);
+        padding: 16px 20px;
+        margin-top:20px;
+        color: #fff!important;
+        text-decoration: none!important;
+        border-color: transparent;
+        background-color: #009fe3;
+        text-align:center">Open game</a>
+    </ion-item>
+    <ion-item text-wrap text-center>
+   	    <p>
+    		{{ 'plugin.mod_gamoteca.gameotecatextmobilepost' | translate }}
+    	</p>
+    </ion-item>
+
+</div>
