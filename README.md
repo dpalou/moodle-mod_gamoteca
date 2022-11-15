@@ -15,14 +15,14 @@ Read more about how the integration works for Creators: https://intercom.help/ga
 
 Note: The Gamoteca plugin requires a Pro or Enterprise license for integration with Moodle /  Totara.
 
-## User Details Key ##
-Once the plugin is installed, a plugin-level setting key in Moodle / Totara is used to encrypt user details passed between the LMS and Gamoteca, and ensures the user and course information are synced up between the two platforms. The setting is available on Moodle / Totara under (Site Administration / Plugins / Gamoteca).
+## Encryption Key Setting ##
+Once the plugin is installed, a plugin-level setting key in Moodle / Totara is used to encrypt user details passed from the LMS to Gamoteca, and ensures the user and course information are synced up between the two platforms. The setting is available on Moodle / Totara under (Site Administration / Plugins / Gamoteca).
 
 The encryption key to be entered above is available for Gamoteca team administrators under (Manage Teams / Integrations).
 
 ## Webservice ##
 
-The following webservice enablesenable's learnersusers progressgame data to be sent from Gamoteca to the LMS:
+The following webservice enablesenable's learnersusers progressgame data to be sent from Gamoteca to the LMS asynchronously:
 
 The endpoint to this Web service is: /webservice/rest/server.php?wstoken=[TOKEN]&wsfunction=gamoteca
 
