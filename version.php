@@ -26,10 +26,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'mod_gamoteca';
-$plugin->release = '0.1.2';
-$plugin->version = 2021082104;
+$plugin->release = '1.0.0';
+$plugin->version = 2022111500;
 $plugin->requires = 2017051500;
-$plugin->maturity = MATURITY_ALPHA;
-$plugin->dependencies = array(
-    'local_oauth' => 2016021600
-);
+$plugin->maturity = MATURITY_STABLE;

@@ -23,6 +23,8 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+require_once(__DIR__.'/encryption.php');
+
 use mod_gamoteca\event\course_module_viewed;
 use mod_gamoteca\event\gamoteca_created;
 use mod_gamoteca\event\gamoteca_deleted;
@@ -113,6 +115,9 @@ function gamoteca_update_instance($moduleinstance, $mform = null) {
 function gamoteca_delete_instance($id) {
     global $DB;
 
+    // $DB->delete_records('config_plugins', array('plugin' => 'local_gamoteca'));
+    // unset_all_config_for_plugin('local_gamoteca');
+
     $exists = $DB->get_record('gamoteca', array('id' => $id));
     if (!$exists) {
         return false;
@@ -168,6 +173,34 @@ function gamoteca_view($gamoteca, $course, $cm, $context) {
 }
 
 /**
+ * Unparse parsed URL object to string
+ * @param stdClass $parsed_url Parsed object 
+ */
+function unparse_url($parsed_url) {
+    $scheme   = isset($parsed_url['scheme']) ? $parsed_url['scheme'] . '://' : '';
+    $host     = isset($parsed_url['host']) ? $parsed_url['host'] : '';
+    $port     = isset($parsed_url['port']) ? ':' . $parsed_url['port'] : '';
+    $user     = isset($parsed_url['user']) ? $parsed_url['user'] : '';
+    $pass     = isset($parsed_url['pass']) ? ':' . $parsed_url['pass']  : '';
+    $pass     = ($user || $pass) ? "$pass@" : '';
+    $path     = isset($parsed_url['path']) ? $parsed_url['path'] : '';
+    $query    = isset($parsed_url['query']) ? '?' . $parsed_url['query'] : '';
+    $fragment = isset($parsed_url['fragment']) ? '#' . $parsed_url['fragment'] : '';
+    return "$scheme$user$pass$host$port$path$query$fragment";
+}
+
+/**
+ * Encrypt string with the given hash
+ * @param string $string String to be encrypted
+ * @param string $key Encryption key
+ */
+function encrypt($string, $key) {
+    $encryption = new Encryption();
+
+    return $encryption->encrypt($string, $key);
+}
+
+/**
  * Called when viewing course page.
  *
  * @param cm_info $coursemodule
@@ -180,29 +213,46 @@ function gamoteca_cm_info_view(cm_info $coursemodule) {
         return null;
     }
 
-    $linktitle = $coursemodule->name;
     $url = $gamoteca->gamotecaurl;
 
     // Additional params to pass to Gamoteca - Site Shortname, Course ID, Course Module ID and User ID.
+    $additionalparamName = 'partnervars';
     $additionalparams = $SITE->shortname . '|' . $coursemodule->course . '|' . $coursemodule->id . '|' . $USER->id;
+
+    // Encrypt additional partner params
+    $encryptionPassphrase = get_config('local_gamoteca', 'encryption_key');
+    $additionalparamsEncrypted = encrypt($additionalparams, $encryptionPassphrase);
 
     if (parse_url($url, PHP_URL_QUERY)) {
         $parsedurl = parse_url($url);
+
         parse_str($parsedurl['query'], $query);
+
         // Gamoteca URL should have link param. Update this link param by appending the additional params.
         if (isset($query['link'])) {
-            $replacelinkwith = $query['link'] . '?addvars=' . $additionalparams;
-            $url = str_replace($query['link'], $replacelinkwith, $url);
+            $innerLink = $query['link'];
+            $parsedInnerURL = parse_url($innerLink);
+            parse_str($parsedInnerURL['query'], $innerQuery);
+            $innerQuery[$additionalparamName] = $additionalparamsEncrypted;
+
+            // Inject back the inner link to the URL
+            $parsedInnerURL['query'] = http_build_query($innerQuery, '', '&');
+            $query['link'] = unparse_url($parsedInnerURL);
+            $parsedurl['query'] = http_build_query($query, '', '&');
+
+            $url = unparse_url($parsedurl);
         } else {
-            $url .= '&addvars=' . $additionalparams;
+            $url .= '&'. $additionalparamName .'='. $additionalparams;
         }
     } else {
-        $url .= '?addvars=' . $additionalparams;
+        $url .= '?'. $additionalparamName .'=' . $additionalparams;
     }
+
 
     // Get user's game status.
     $gamestate = gamoteca_getuser_game_state($coursemodule->instance, $USER->id);
-
+    
+    $linktitle = get_string('gamotecaLinkTitlePrefix', 'mod_gamoteca') .' '. $coursemodule->name;
     $activitylink = html_writer::empty_tag('img', array('src' => $coursemodule->get_icon_url(),
         'class' => 'iconlarge activityicon', 'alt' => $gamestate, 'title' => $gamestate, 'role' => 'presentation')) .
         html_writer::tag('span', $linktitle, array('class' => 'gameinstancename'));
@@ -322,4 +372,12 @@ function gamoteca_set_completion($gamoteca, $userid, $completionstate = COMPLETI
 
     $completion->update_state($cm, $completionstate, $userid);
     $completion->invalidatecache($gamoteca->course, $userid, true);
+}
+
+function gamoteca_uninstall() {
+    global $DB;
+
+    $DB->delete_records('config_plugins', array('plugin' => 'local_gamoteca'));
+
+    return true;
 }
