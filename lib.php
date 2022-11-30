@@ -23,8 +23,6 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once(__DIR__.'/encryption.php');
-
 use mod_gamoteca\event\course_module_viewed;
 use mod_gamoteca\event\gamoteca_created;
 use mod_gamoteca\event\gamoteca_deleted;
@@ -176,7 +174,7 @@ function gamoteca_view($gamoteca, $course, $cm, $context) {
  * Unparse parsed URL object to string
  * @param stdClass $parsed_url Parsed object 
  */
-function unparse_url($parsed_url) {
+function mod_gamoteca_unparse_url($parsed_url) {
     $scheme   = isset($parsed_url['scheme']) ? $parsed_url['scheme'] . '://' : '';
     $host     = isset($parsed_url['host']) ? $parsed_url['host'] : '';
     $port     = isset($parsed_url['port']) ? ':' . $parsed_url['port'] : '';
@@ -190,14 +188,29 @@ function unparse_url($parsed_url) {
 }
 
 /**
- * Encrypt string with the given hash
- * @param string $string String to be encrypted
+ * Encrypt string with the given key
+ * @param string $message Message to be encrypted
  * @param string $key Encryption key
  */
-function encrypt($string, $key) {
-    $encryption = new Encryption();
+function mod_gamoteca_encrypt($message, $key) {
+    $nonce = random_bytes(
+        SODIUM_CRYPTO_SECRETBOX_NONCEBYTES
+    );
 
-    return $encryption->encrypt($string, $key);
+    $encrypted = sodium_crypto_secretbox(
+        $message,
+        $nonce,
+        $key
+    );
+
+    $cipher = base64_encode(
+        $nonce.
+        $encrypted
+    );
+
+    sodium_memzero($message);
+    sodium_memzero($key);
+    return $cipher;
 }
 
 /**
@@ -221,7 +234,7 @@ function gamoteca_cm_info_view(cm_info $coursemodule) {
 
     // Encrypt additional partner params
     $encryptionPassphrase = get_config('local_gamoteca', 'encryption_key');
-    $additionalparamsEncrypted = encrypt($additionalparams, $encryptionPassphrase);
+    $additionalparamsEncrypted = mod_gamoteca_encrypt($additionalparams, sodium_hex2bin($encryptionPassphrase));
 
     if (parse_url($url, PHP_URL_QUERY)) {
         $parsedurl = parse_url($url);
@@ -237,10 +250,10 @@ function gamoteca_cm_info_view(cm_info $coursemodule) {
 
             // Inject back the inner link to the URL
             $parsedInnerURL['query'] = http_build_query($innerQuery, '', '&');
-            $query['link'] = unparse_url($parsedInnerURL);
+            $query['link'] = mod_gamoteca_unparse_url($parsedInnerURL);
             $parsedurl['query'] = http_build_query($query, '', '&');
 
-            $url = unparse_url($parsedurl);
+            $url = mod_gamoteca_unparse_url($parsedurl);
         } else {
             $url .= '&'. $additionalparamName .'='. $additionalparams;
         }
