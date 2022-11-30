@@ -58,6 +58,34 @@ $string['completionstatusrequired'] = 'Game status required';
 $string['completionstatusrequired_help'] = 'Gamoteca game status required to mark this activity as complete';
 $string['completionstatus'] = 'Passed';
 $string['gameotecatextmobile'] = 'Gamoteca game will be launched in the Gamoteca app. For an optimal experience, download the Gamoteca app from the app store before launching the game.';
-$string['gameotecatextmobilepost'] = 'Note: Once you Register or Sign in on Gamoteca, your account will be linked to this eCampus and your game progress and completion will be updated here too.';
+$string['gameotecatextmobilepost'] = 'Note: Once you Register or Sign in on Gamoteca, your account will be linked to Moodle and your game progress and completion will be updated here too.';
 
-$string['privacy:metadata'] = 'Gamoteca plugin does not store any personal user data.';
+$string['privacy:metadata:gamoteca'] = 'Information about the Gamoteca learning activity in Moodle';
+$string['privacy:metadata:gamotecaid'] = 'Unique ID of the Gamoteca learning activity in Moodle';
+$string['privacy:metadata:course'] = 'ID of the Moodle course this activity is part of';
+$string['privacy:metadata:name'] = 'The name of the activity module instance';
+$string['privacy:metadata:gamoteca_timecreated'] = 'Timestamp of when the activity was added to the course';
+$string['privacy:metadata:gamoteca_timemodified'] = 'Timestamp of when the activity was last modified';
+$string['privacy:metadata:intro'] = 'Activity description';
+$string['privacy:metadata:introformat'] = 'The format of the intro field.';
+$string['privacy:metadata:gamotecaurl'] = 'URL to the game on Gamoteca';
+$string['privacy:metadata:completionscoredisabled'] = 'Score completion enabled / disabled';
+$string['privacy:metadata:completionscorerequired'] = 'Score required to mark this activity as complete';
+$string['privacy:metadata:completionstatusdisabled'] = 'Game status completion enabled / disabled';
+$string['privacy:metadata:completionstatusrequired'] = 'Game status required to mark this activity as complete';
+$string['privacy:metadata:gametime'] = 'Game play time';
+
+$string['privacy:metadata:gamotecadata'] = 'Information about Gamoteca game progress';
+$string['privacy:metadata:gamotecadataid'] = 'Unique ID of the Gamoteca game progress';
+$string['privacy:metadata:userid'] = 'User ID of the Moodle user';
+$string['privacy:metadata:gameid'] = 'ID of Moodle module';
+$string['privacy:metadata:score'] = 'The number of points achieved in the Gamoteca game';
+$string['privacy:metadata:timespent'] = 'Time spent by the learner since the last progress update';
+$string['privacy:metadata:gamotecadata_timecreated'] = 'Timestamp of when the game progress was added';
+$string['privacy:metadata:gamotecadata_timemodified'] = 'Timestamp of when the game progress last modified';
+
+$string['privacy:metadata:lti_client'] = 'In order to integrate with a remote LTI service, user data needs to be exchanged with that service.';
+$string['privacy:metadata:lti_client:userid'] = 'The user ID is sent from Moodle to allow you to associate the account on Gamoteca.';
+$string['privacy:metadata:lti_client:courseid'] = 'The course ID is sent from Moodle to link progress.';
+$string['privacy:metadata:lti_client:moduleid'] = 'The module ID is sent from Moodle to link progress.';
+$string['privacy:metadata:lti_client:siteshortname'] = 'Moodle site\'s short name is sent from Moodle to associate with correct Gamoteca pro/enterprise account.';
