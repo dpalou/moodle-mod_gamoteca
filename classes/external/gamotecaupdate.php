@@ -86,6 +86,8 @@ class gamotecaupdate extends external_api {
             $thisrecord['gameid'] = $game['gameid'];
             $thisrecord['userid'] = $game['userid'];
             $coursecontext = context_course::instance($game['courseid']);
+            self::validate_context($coursecontext);
+            require_capability('moodle/course:togglecompletion', $coursecontext);
 
             // Check if user is enrolled on the given course.
             if (is_enrolled($coursecontext, $game['userid'])) {
