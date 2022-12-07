@@ -25,10 +25,16 @@
 
 namespace mod_gamoteca\privacy;
 use core_privacy\local\metadata\collection;
+use core_privacy\local\request\contextlist;
+use core_privacy\local\request\approved_contextlist;
+use core_privacy\local\request\userlist;
+use core_privacy\local\request\approved_userlist;
 
 class provider implements
     // This plugin does store personal user data.
-    \core_privacy\local\metadata\provider {
+    \core_privacy\local\metadata\provider,
+    \core_privacy\local\request\core_userlist_provider,
+    \core_privacy\local\request\plugin\provider {
 
 
     /**
@@ -38,21 +44,6 @@ class provider implements
      * @return collection Collection with our added items.
      */
     public static function get_metadata(collection $collection) : collection {
-        $collection->add_database_table('gamoteca', [
-            'id' => 'privacy:metadata:gamotecaid',
-            'course' => 'privacy:metadata:course',
-            'name' => 'privacy:metadata:name',
-            'timecreated' => 'privacy:metadata:gamoteca_timecreated',
-            'timemodified' => 'privacy:metadata:gamoteca_timemodified',
-            'intro' => 'privacy:metadata:intro',
-            'introformat' => 'privacy:metadata:introformat',
-            'gamotecaurl' => 'privacy:metadata:gamotecaurl',
-            'completionscoredisabled' => 'privacy:metadata:completionscoredisabled',
-            'completionscorerequired' => 'privacy:metadata:completionscorerequired',
-            'completionstatusdisabled' => 'privacy:metadata:completionstatusdisabled',
-            'completionstatusrequired' => 'privacy:metadata:completionstatusrequired',
-            'gametime' => 'privacy:metadata:gametime',
-        ], 'privacy:metadata:gamoteca');
 
         $collection->add_database_table('gamoteca_data', [
             'id' => 'privacy:metadata:gamotecadataid',
@@ -72,5 +63,55 @@ class provider implements
         ], 'privacy:metadata:lti_client');
 
         return $collection;
+    }
+
+    /**
+     * Get the list of contexts that contain user information for the specified user.
+     *
+     * @param int $userid The user to search.
+     * @return contextlist The contextlist containing the list of contexts used in this plugin.
+     */
+    public static function get_contexts_for_userid(int $userid) : contextlist {
+        return new contextlist();
+    }
+
+    /**
+     * Get the list of users who have data within a context.
+     *
+     * @param userlist $userlist The userlist containing the list of users who have data in this context/plugin combination.
+     */
+    public static function get_users_in_context(userlist $userlist) {
+    }
+
+    /**
+     * Export all user data for the specified user, in the specified contexts.
+     *
+     * @param approved_contextlist $contextlist The approved contexts to export information for.
+     */
+    public static function export_user_data(approved_contextlist $contextlist) {
+    }
+
+    /**
+     * Delete all user data which matches the specified context.
+     *
+     * @param \context $context A user context.
+     */
+    public static function delete_data_for_all_users_in_context(\context $context) {
+    }
+
+    /**
+     * Delete multiple users within a single context.
+     *
+     * @param approved_userlist $userlist The approved context and user information to delete information for.
+     */
+    public static function delete_data_for_users(approved_userlist $userlist) {
+    }
+
+    /**
+     * Delete all user data for the specified user, in the specified contexts.
+     *
+     * @param approved_contextlist $contextlist The approved contexts and user information to delete information for.
+     */
+    public static function delete_data_for_user(approved_contextlist $contextlist) {
     }
 }
