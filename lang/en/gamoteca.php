@@ -60,21 +60,6 @@ $string['completionstatus'] = 'Passed';
 $string['gameotecatextmobile'] = 'Gamoteca game will be launched in the Gamoteca app. For an optimal experience, download the Gamoteca app from the app store before launching the game.';
 $string['gameotecatextmobilepost'] = 'Note: Once you Register or Sign in on Gamoteca, your account will be linked to Moodle and your game progress and completion will be updated here too.';
 
-$string['privacy:metadata:gamoteca'] = 'Information about the Gamoteca learning activity in Moodle';
-$string['privacy:metadata:gamotecaid'] = 'Unique ID of the Gamoteca learning activity in Moodle';
-$string['privacy:metadata:course'] = 'ID of the Moodle course this activity is part of';
-$string['privacy:metadata:name'] = 'The name of the activity module instance';
-$string['privacy:metadata:gamoteca_timecreated'] = 'Timestamp of when the activity was added to the course';
-$string['privacy:metadata:gamoteca_timemodified'] = 'Timestamp of when the activity was last modified';
-$string['privacy:metadata:intro'] = 'Activity description';
-$string['privacy:metadata:introformat'] = 'The format of the intro field.';
-$string['privacy:metadata:gamotecaurl'] = 'URL to the game on Gamoteca';
-$string['privacy:metadata:completionscoredisabled'] = 'Score completion enabled / disabled';
-$string['privacy:metadata:completionscorerequired'] = 'Score required to mark this activity as complete';
-$string['privacy:metadata:completionstatusdisabled'] = 'Game status completion enabled / disabled';
-$string['privacy:metadata:completionstatusrequired'] = 'Game status required to mark this activity as complete';
-$string['privacy:metadata:gametime'] = 'Game play time';
-
 $string['privacy:metadata:gamotecadata'] = 'Information about Gamoteca game progress';
 $string['privacy:metadata:gamotecadataid'] = 'Unique ID of the Gamoteca game progress';
 $string['privacy:metadata:userid'] = 'User ID of the Moodle user';
