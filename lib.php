@@ -113,9 +113,6 @@ function gamoteca_update_instance($moduleinstance, $mform = null) {
 function gamoteca_delete_instance($id) {
     global $DB;
 
-    // $DB->delete_records('config_plugins', array('plugin' => 'local_gamoteca'));
-    // unset_all_config_for_plugin('local_gamoteca');
-
     $exists = $DB->get_record('gamoteca', array('id' => $id));
     if (!$exists) {
         return false;
@@ -233,7 +230,7 @@ function gamoteca_cm_info_view(cm_info $coursemodule) {
     $additionalparams = $SITE->shortname . '|' . $coursemodule->course . '|' . $coursemodule->id . '|' . $USER->id;
 
     // Encrypt additional partner params
-    $encryptionPassphrase = get_config('local_gamoteca', 'encryption_key');
+    $encryptionPassphrase = get_config('mod_gamoteca', 'encryption_key');
     $additionalparamsEncrypted = mod_gamoteca_encrypt($additionalparams, sodium_hex2bin($encryptionPassphrase));
 
     if (parse_url($url, PHP_URL_QUERY)) {
@@ -390,7 +387,7 @@ function gamoteca_set_completion($gamoteca, $userid, $completionstate = COMPLETI
 function gamoteca_uninstall() {
     global $DB;
 
-    $DB->delete_records('config_plugins', array('plugin' => 'local_gamoteca'));
+    $DB->delete_records('config_plugins', array('plugin' => 'mod_gamoteca'));
 
     return true;
 }

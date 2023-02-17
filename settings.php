@@ -27,44 +27,23 @@ defined('MOODLE_INTERNAL') || die();
 // Ensure the configurations for this site are set
 if ( $hassiteconfig ){
 
-	// Create the new settings page
-	// - in a local plugin this is not defined as standard, so normal $settings->methods will throw an error as
-	// $settings will be NULL
-	$settings = new admin_settingpage( 'gamoteca', 'Gamoteca' );
-
-	// Create 
-	$ADMIN->add( 'localplugins', $settings );
-
-	// Add a setting field to the settings for this page
-    // $settings->add( new admin_setting_configpasswordunmask(
-		
-	// 	// This is the reference you will use to your configuration
-	// 	'local_gamoteca/encryptionkey',
-	
-	// 	// This is the friendly title for the config, which will be displayed
-	// 	'External Encryption Key',
-	
-	// 	// This is helper text for this config field
-	// 	'This is the key used to encrypt login credentials',
-	
-	// ) );
 	$settings->add( new admin_setting_configtext(
-		
+
 		// This is the reference you will use to your configuration
-		'local_gamoteca/encryption_key',
-	
+		'mod_gamoteca/encryption_key',
+
 		// This is the friendly title for the config, which will be displayed
 		'Encryption key',
-	
+
 		// This is helper text for this config field
 		'This key will be used to encrypt user & course details passed between the LMS and Gamoteca.',
-	
+
 		// This is the default value
 		'',
-	
+
 		// This is the type of Parameter this config is
 		PARAM_TEXT
-	
+
 	) );
 
 }
