@@ -87,5 +87,19 @@ function xmldb_gamoteca_upgrade($oldversion=0) {
         upgrade_mod_savepoint(true, 2020012101, 'gamoteca');
     }
 
+    if ($oldversion <= 2023031400) {
+        $table = new xmldb_table('gamoteca_data');
+        // Adding email field to table gamoteca_data.
+        $table->add_field('email', XMLDB_TYPE_CHAR, '255', null, null, null, null);
+
+        // Conditionally launch create table for gamoteca_data.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        // Gamoteca savepoint reached.
+        upgrade_mod_savepoint(true, 2023031400, 'gamoteca');
+    }
+
     return true;
 }

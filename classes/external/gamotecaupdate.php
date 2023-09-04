@@ -60,7 +60,9 @@ class gamotecaupdate extends external_api {
                         array(
                             'courseid' => new external_value(PARAM_INT, 'id of course'),
                             'gameid' => new external_value(PARAM_INT, 'id of game'),
-                            'userid' => new external_value(PARAM_INT, 'id of user'),
+                            'userid' => new external_value(PARAM_INT, 'id of user', VALUE_OPTIONAL),
+                            // 'userid' => new external_value(PARAM_INT, 'id of user'),
+                            'email' => new external_value(PARAM_TEXT, 'email address of user', VALUE_OPTIONAL),
                             'score' => new external_value(PARAM_INT, 'game score'),
                             'status' => new external_value(PARAM_RAW, 'game status - passed, failed, etc.'),
                             'timespent' => new external_value(PARAM_RAW, 'game time'),
@@ -83,6 +85,20 @@ class gamotecaupdate extends external_api {
         $params = self::validate_parameters(self::update_completion_parameters(), array('games' => $games));
 
         foreach ($games as $game) {
+            // Check if any user identifier exists (userid or email)
+            if(!$game['userid'] && !$game['email']) {
+                $thisrecord['updated'] = false;
+                $thisrecord['message'] = 'User has not yet enrolled on this course';
+                continue;
+            }
+            // If user ID is not given then identify by email address
+            if(!$game['userid'] && $game['email']) {
+                $userRecord = $DB->get_record('user', array('email' => $game['email']));
+                if($userRecord) {
+                    $game['userid'] = $userRecord->id;
+                }
+            }
+
             $thisrecord['gameid'] = $game['gameid'];
             $thisrecord['userid'] = $game['userid'];
             $coursecontext = context_course::instance($game['courseid']);
