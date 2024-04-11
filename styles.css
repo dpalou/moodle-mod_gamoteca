@@ -19,3 +19,22 @@
 .gamotecaicon {
    content:url([[pix:gamoteca|icon]]);
 }
+
+.gamoteca-open-link {
+    position: relative;
+    font-size: 12px!important;
+    line-height: 50px;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: .02em;
+    font-weight: 700;
+    color: #4d4d4d!important;
+    border-color: rgba(0,0,0,.2);
+    padding: 16px 20px;
+    margin-top:20px;
+    color: #fff!important;
+    text-decoration: none!important;
+    border-color: transparent;
+    background-color: #009fe3;
+    text-align:center
+}
