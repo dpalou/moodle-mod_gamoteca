@@ -59,6 +59,10 @@ $string['completionstatusrequired_help'] = 'Gamoteca game status required to mar
 $string['completionstatus'] = 'Passed';
 $string['gameotecatextmobile'] = 'Gamoteca game will be launched in the Gamoteca app. For an optimal experience, download the Gamoteca app from the app store before launching the game.';
 $string['gameotecatextmobilepost'] = 'Note: Once you Register or Sign in on Gamoteca, your account will be linked to Moodle and your game progress and completion will be updated here too.';
+$string['gameotecatextmobileopen'] = 'Open game';
+
+$string['settings:encryption_key:title'] = 'Encryption key';
+$string['settings:encryption_key:helper'] = 'This key will be used to encrypt user & course details passed between the LMS and Gamoteca.';
 
 $string['privacy:metadata:gamotecadata'] = 'Information about Gamoteca game progress';
 $string['privacy:metadata:gamotecadataid'] = 'Unique ID of the Gamoteca game progress';

@@ -33,10 +33,10 @@ if ( $hassiteconfig ){
 		'mod_gamoteca/encryption_key',
 
 		// This is the friendly title for the config, which will be displayed
-		'Encryption key',
+		get_string('settings:encryption_key:title', 'mod_gamoteca'),
 
 		// This is helper text for this config field
-		'This key will be used to encrypt user & course details passed between the LMS and Gamoteca.',
+		get_string('settings:encryption_key:helper', 'mod_gamoteca'),
 
 		// This is the default value
 		'',
