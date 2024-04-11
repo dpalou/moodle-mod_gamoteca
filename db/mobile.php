@@ -1,5 +1,5 @@
 <?php
-// This file is part of the Zoom module for Moodle - http://moodle.org/
+// This file is part of the Gamoteca module for Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Zoom module capability definition
+ * Gamoteca module capability definition
  *
  * @package    mod_gamoteca
  * @copyright  2021 Emanuel Bechis <e.bechis@itcilo.org>

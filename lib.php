@@ -42,9 +42,6 @@ function gamoteca_supports($feature) {
             return true;
         case FEATURE_BACKUP_MOODLE2:
             return true;
-            //Rimosso per incompatibilità con mobile, da capire le conseguenze
-        // case FEATURE_NO_VIEW_LINK:
-        //     return true;
         case FEATURE_COMPLETION_HAS_RULES:
             return true;
         default:

@@ -1,5 +1,5 @@
 <?php                                                                                                                                                                            
-// This file is part of the Zoom plugin for Moodle - http://moodle.org/                                                                                                          
+// This file is part of the Gamoteca plugin for Moodle - http://moodle.org/                                                                                                          
 //                                                                                                                                                                               
 // Moodle is free software: you can redistribute it and/or modify                                                                                                                
 // it under the terms of the GNU General Public License as published by                                                                                                          
@@ -15,11 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.                                                                                                               
                                                                                                                                                                                  
 /**                                                                                                                                                                              
- * Mobile support for zoom.                                                                                                                                                      
+ * Mobile support for gamoteca.                                                                                                                                                      
  *                                                                                                                                                                               
- * @package     mod_zoom                                                                                                                                                         
- * @copyright   2018 Nick Stefanski <nmstefanski@gmail.com>                                                                                                                      
- * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later                                                                                                         
+ * @package     mod_gamoteca
+ * @copyright   2024 Gamoteca <info@gamoteca.com>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */                                                                                                                                                                              
                                                                                                                                                                                  
 namespace mod_gamoteca\output;                                                                                                                                                       
@@ -28,27 +28,23 @@ defined('MOODLE_INTERNAL') || die();
 use context_module;                                                                                                                                                                                                                                                                                                                     
                                                                                                                                                                        
 /**                                                                                                                                                                              
- * Mobile output class for zoom                                                                                                                                                  
+ * Mobile output class for gamoteca                                                                                                                                                  
  *                                                                                                                                                                               
- * @package     mod_zoom                                                                                                                                                         
- * @copyright   2018 Nick Stefanski <nmstefanski@gmail.com>                                                                                                                      
- * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later                                                                                                         
+ * @package     mod_gamoteca
+ * @copyright   2024 Gamoteca <info@gamoteca.com>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */                                                                                                                                                                              
 class mobile {                                                                                                                                                                   
                                                                                                                                                                                  
     /**                                                                                                                                                                          
-     * Returns the zoom course view for the mobile app,                                                                                                                          
-     *  including meeting details and launch button (if applicable).                                                                                                             
+     * Returns the gamoteca course view for the mobile app,                                                                                                                          
+     * including meeting details and launch button (if applicable).                                                                                                             
      * @param  array $args Arguments from tool_mobile_get_content WS                                                                                                             
      *                                                                                                                                                                           
      * @return array   HTML, javascript and otherdata  
      * 
      *                                                                                                                         
      */
-    
-
-    
-
     public static function mobile_course_view($args) {                                                                                                                           
         global $OUTPUT, $DB,$CFG;                                                                                                                                          
                                                                                                                                                                                  
