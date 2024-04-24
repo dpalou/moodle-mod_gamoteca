@@ -1,3 +1,24 @@
+{{!
+    This file is part of Gamoteca plugin for Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template mod_gamoteca/mobile_view_page.mustache
+
+    This template renders the gamoteca game link to open externally
+}}
 {{=<% %>=}}
 <div>
     <core-course-module-description description="<% gamoteca.intro %>" component="mod_gamoteca" componentId="<% cmid %>"></core-course-module-description>
@@ -12,22 +33,7 @@
     	</p>
     </ion-item>
     <ion-item text-center>
-        <a href="<% link %>" target="_blank" core-link style="position: relative;
-        font-size: 12px!important;
-        line-height: 50px;
-        text-transform: uppercase;
-        text-decoration: none;
-        letter-spacing: .02em;
-        font-weight: 700;
-        color: #4d4d4d!important;
-        border-color: rgba(0,0,0,.2);
-        padding: 16px 20px;
-        margin-top:20px;
-        color: #fff!important;
-        text-decoration: none!important;
-        border-color: transparent;
-        background-color: #009fe3;
-        text-align:center">Open game</a>
+        <a href="<% link %>" target="_blank" core-link class="gamoteca-open-link">{{ 'plugin.mod_gamoteca.gameotecatextmobileopen' | translate }}</a>
     </ion-item>
     <ion-item text-wrap text-center>
    	    <p>

@@ -26,21 +26,20 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-$services = array(
-    'Gamoteca game status update' => array(
-        'functions' => array('gamoteca'),
+$services = [
+    'Gamoteca game status update' => [
+        'functions' => ['gamoteca'],
         'requiredcapability' => '',
         'restrictedusers' => 0,
         'enabled' => 1,
-    )
-);
+    ],
+];
 
-$functions = array(
-    'gamoteca' => array(
+$functions = [
+    'gamoteca' => [
         'classname'     => 'mod_gamoteca\\external\\gamotecaupdate',
         'methodname'    => 'update_completion',
         'description'   => 'Update user activity completion data',
-        'type'          => 'write'
-    )
-
-);
+        'type'          => 'write',
+    ],
+];

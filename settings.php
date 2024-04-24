@@ -24,26 +24,26 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-// Ensure the configurations for this site are set
-if ( $hassiteconfig ){
+// Ensure the configurations for this site are set.
+if ( $hassiteconfig ) {
 
-	$settings->add( new admin_setting_configtext(
+    $settings->add( new admin_setting_configtext(
 
-		// This is the reference you will use to your configuration
-		'mod_gamoteca/encryption_key',
+        // This is the reference you will use to your configuration.
+        'mod_gamoteca/encryption_key',
 
-		// This is the friendly title for the config, which will be displayed
-		'Encryption key',
+        // This is the friendly title for the config, which will be displayed.
+        get_string('settings:encryption_key:title', 'mod_gamoteca'),
 
-		// This is helper text for this config field
-		'This key will be used to encrypt user & course details passed between the LMS and Gamoteca.',
+        // This is helper text for this config field.
+        get_string('settings:encryption_key:helper', 'mod_gamoteca'),
 
-		// This is the default value
-		'',
+        // This is the default value.
+        '',
 
-		// This is the type of Parameter this config is
-		PARAM_TEXT
+        // This is the type of Parameter this config is.
+        PARAM_TEXT
 
-	) );
+    ) );
 
 }

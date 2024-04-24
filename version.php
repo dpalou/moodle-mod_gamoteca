@@ -26,7 +26,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'mod_gamoteca';
-$plugin->release = '1.1.0';
-$plugin->version = 2023090100;
+$plugin->release = '1.2.0';
+$plugin->version = 2024042200;
 $plugin->requires = 2017051500;
 $plugin->maturity = MATURITY_STABLE;

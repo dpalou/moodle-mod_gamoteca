@@ -17,17 +17,15 @@
 /**
  * Backup steps for mod_gamoteca are defined here.
  *
+ * For more information about the backup and restore process, please visit:
+ * https://docs.moodle.org/dev/Backup_2.0_for_developers
+ * https://docs.moodle.org/dev/Restore_2.0_for_developers
+ *
  * @package     mod_gamoteca
  * @category    backup
  * @copyright   2020 Catalyst IT Europe (http://www.catalyst-eu.net/)
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-defined('MOODLE_INTERNAL') || die();
-
-// For more information about the backup and restore process, please visit:
-// https://docs.moodle.org/dev/Backup_2.0_for_developers
-// https://docs.moodle.org/dev/Restore_2.0_for_developers
 
 /**
  * Define the complete structure for backup, with file and id annotations.
@@ -43,38 +41,42 @@ class backup_gamoteca_activity_structure_step extends backup_activity_structure_
         $userinfo = $this->get_setting_value('userinfo');
 
         // Replace with the attributes and final elements that the element will handle.
-        $attributes = array('id');
-        $finalelements = array('course',
-                                'name',
-                                'timecreated',
-                                'timemodified',
-                                'intro',
-                                'introformat',
-                                'gamotecaurl',
-                                'completionscoredisabled',
-                                'completionscorerequired',
-                                'completionstatusdisabled',
-                                'completionstatusrequired',
-                                'gametime');
+        $attributes = ['id'];
+        $finalelements = [
+            'course',
+            'name',
+            'timecreated',
+            'timemodified',
+            'intro',
+            'introformat',
+            'gamotecaurl',
+            'completionscoredisabled',
+            'completionscorerequired',
+            'completionstatusdisabled',
+            'completionstatusrequired',
+            'gametime',
+        ];
         $root = new backup_nested_element('gamoteca', $attributes, $finalelements);
 
         // Build the tree with these elements with $root as the root of the backup tree.
-        $childattributes = array('id');
-        $childfinalelements = array('userid',
-                                    'gameid',
-                                    'score',
-                                    'status',
-                                    'timespent',
-                                    'timecreated',
-                                    'timemodified');
+        $childattributes = ['id'];
+        $childfinalelements = [
+            'userid',
+            'gameid',
+            'score',
+            'status',
+            'timespent',
+            'timecreated',
+            'timemodified',
+        ];
         $child = new backup_nested_element('gamoteca_data', $childattributes, $childfinalelements);
         $root->add_child($child);
 
         // Define the source tables for the elements.
-        $root->set_source_table('gamoteca', array('id' => backup::VAR_ACTIVITYID));
+        $root->set_source_table('gamoteca', ['id' => backup::VAR_ACTIVITYID]);
 
         if ($userinfo) {
-            $child->set_source_table('gamoteca_data', array('gameid' => backup::VAR_PARENTID), 'id ASC');
+            $child->set_source_table('gamoteca_data', ['gameid' => backup::VAR_PARENTID], 'id ASC');
         }
 
         // Define id annotations.

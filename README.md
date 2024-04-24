@@ -1,28 +1,35 @@
 # Gamoteca #
-Gamoteca is a human-connected, multi-player, creator platform and learner app to make learning fun, interactive and more human. 
+Gamoteca is a platform to easily create human-to-human, collaborative learning experiences for individuals to learn and practice alongside other learners at scale, whenever they want wherever they want.
 
-Access the Creator platform at: https://www.gamoteca.com/ and download the Learner app from the Apple App or Google Play stores.
+Access the Creator platform at: https://www.gamoteca.com/ and download the Learner app from the [Apple App](https://apps.apple.com/gb/app/gamoteca/id1238297749) or [Google Play](https://play.google.com/store/apps/details?id=com.gamoteca.app&hl=en&gl=US) stores.
 
-# Gamoteca - Moodle / Totara (LMS) integration #
+# Gamoteca - Moodle integration #
 
-This plugin allows course creators to add a new Gamoteca activity within a course which provides a progress-trackable link to a learning experience (game) on the Gamoteca website / mobile app.
+This plugin allows course creators to add a new Gamoteca Technology Enhanced Collaboration Activity (TECA) within a course which provides a progress-trackable link to a TECA on the Gamoteca website / mobile app.
 
-It will also includes a web service which will be allowed accesssed to Gamoteca to send user data i.e. game progress ( Not-started/In-Progress/Completed ), Score, time spent, etc. back to the LMS.
+It also includes a web service which allows Gamoteca to send user data i.e. game progress (Not-started/In-Progress/Completed ), Score, time spent, etc. back to the LMS.
 
-The link to the Gamoteca game will include the following data: Module ID User ID Site Code (to identify the Moodle site that the link is coming from)
+The link to Gamoteca will include the following data:
+- Module ID
+- User ID
+- Site Code (to identify the Moodle site that the link is coming from)
 
-Read more about how the integration works for Creators: https://intercom.help/gamoteca/en/articles/4770544-gamoteca-s-lms-integration
+Read more about how the integration works for Gamoteca Creators:
+https://intercom.help/gamoteca/en/articles/4770544-gamoteca-s-lms-integration
 
-Note: The Gamoteca plugin requires a Pro or Enterprise license for integration with Moodle /  Totara.
+Note: The Moodle plugin requires a Gamoteca Pro or Enterprise license for integration with Moodle.
 
 ## Encryption Key Setting ##
-Once the plugin is installed, a plugin-level setting key in Moodle / Totara is used to encrypt user details passed from the LMS to Gamoteca, and ensures the user and course information are synced up between the two platforms. The setting is available on Moodle / Totara under (Site Administration / Plugins / Gamoteca).
+Once the plugin is installed, a plugin-level setting key in Moodle is used to encrypt user details passed from the LMS to Gamoteca, and ensures the user and course information are synced up between the two platforms. The setting is available on Moodle under (Site Administration / Plugins / Gamoteca).
 
 The encryption key to be entered above is available for Gamoteca team administrators under (Manage Teams / Integrations).
 
+Dependency: The encryption key requires the PHP-Sodium extension. Read more here:
+https://docs.moodle.org/311/en/Environment_-_PHP_extension_sodium
+
 ## Webservice ##
 
-The following webservice enablesenable's learnersusers progressgame data to be sent from Gamoteca to the LMS asynchronously:
+The following webservice enables learners progress to be sent from Gamoteca to the LMS asynchronously:
 
 The endpoint to this Web service is: /webservice/rest/server.php?wstoken=[TOKEN]&wsfunction=gamoteca
 
@@ -36,12 +43,11 @@ The required parameter is 'games' which should be an array of arrays. The requir
 * games[0][timespent] - timespent should be string
 
 
-A Webservice [TOKEN] needs to be generated on Moodle / Totara under (Site Administration/ Web services / Manage tokens) and securely shared with Gamoteca.
+A Webservice [TOKEN] needs to be generated on Moodleunder (Site Administration/ Web services / Manage tokens) and securely shared with Gamoteca.
 
 ## License ##
 
-The plugin is maintained by Technovatio Limited (Gamoteca), UK. 
-Moodle mobile compatibility was added by the International Training Centre of the ILO (ITCILO) in 2021.
+The plugin is maintained by Technovatio Limited (Gamoteca), UK.
 
 The plugin was originally developed in 2020 by Catalyst IT Europe (http://www.catalyst-eu.net/)
 
