@@ -15,45 +15,24 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * The mod_gamoteca course module viewed event.
+ * The mod_gamoteca instance list viewed event.
  *
  * @package    mod_gamoteca
- * @author     Jackson D'souza <jackson.dsouza@catalyst-eu.net>
- * @copyright  2020 Catalyst IT Europe (http://www.catalyst-eu.net/)
+ * @author     Peter Varga <peter@gamoteca.com>
+ * @copyright  2024 Gamoteca <info@gamoteca.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace mod_gamoteca\event;
 
 /**
- * The mod_gamoteca course module viewed event class.
+ * The mod_gamoteca instance list viewed event class.
  *
  * @package    mod_gamoteca
- * @since      Moodle 3.3
- * @author     Jackson D'souza <jackson.dsouza@catalyst-eu.net>
- * @copyright  2020 Catalyst IT Europe (http://www.catalyst-eu.net/)
+ * @author     Peter Varga <peter@gamoteca.com>
+ * @copyright  2024 Gamoteca <info@gamoteca.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class course_module_viewed extends \core\event\course_module_viewed {
-
-    /**
-     * Init method.
-     *
-     * @return void
-     */
-    protected function init() {
-        $this->data['crud'] = 'r';
-        $this->data['edulevel'] = self::LEVEL_PARTICIPATING;
-        $this->data['objecttable'] = 'gamoteca';
-    }
-
-
-    /**
-     * Map the objectid to it's new value in the new course.
-     *
-     * @return array
-     */
-    public static function get_objectid_mapping() {
-        return ['db' => 'gamoteca', 'restore' => 'gamoteca'];
-    }
+class course_module_instance_list_viewed extends \core\event\course_module_instance_list_viewed {
+    // No code required here as the parent class handles it all.
 }

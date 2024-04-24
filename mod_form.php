@@ -18,7 +18,7 @@
  * The main mod_gamoteca configuration form.
  *
  * @package     mod_gamoteca
- * @copyright   2020 Catalyst IT Europe (http://www.catalyst-eu.net/)
+ * @copyright   2024 Gamoteca <info@gamoteca.com>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -47,7 +47,7 @@ class mod_gamoteca_mod_form extends moodleform_mod {
         $mform->addElement('header', 'general', get_string('general', 'form'));
 
         // Adding the standard "name" field.
-        $mform->addElement('text', 'name', get_string('name', 'mod_gamoteca'), array('size' => '64'));
+        $mform->addElement('text', 'name', get_string('name', 'mod_gamoteca'), ['size' => '64']);
 
         if (!empty($CFG->formatstringstriptags)) {
             $mform->setType('name', PARAM_TEXT);
@@ -59,7 +59,13 @@ class mod_gamoteca_mod_form extends moodleform_mod {
         $mform->addRule('name', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
         $mform->addHelpButton('name', 'name', 'mod_gamoteca');
 
-        $mform->addElement('url', 'gamotecaurl', get_string('gamotecaurl', 'mod_gamoteca'), array('size'=>'255'), array('usefilepicker' => false));
+        $mform->addElement(
+            'url',
+            'gamotecaurl',
+            get_string('gamotecaurl', 'mod_gamoteca'),
+            ['size' => '255'],
+            ['usefilepicker' => false]
+        );
         $mform->setType('gamotecaurl', PARAM_URL);
         $mform->addRule('gamotecaurl', null, 'required', null, 'client');
 
@@ -84,8 +90,8 @@ class mod_gamoteca_mod_form extends moodleform_mod {
     public function add_completion_rules() {
         $mform =& $this->_form;
 
-        $group = array();
-        $group[] =& $mform->createElement('text', 'completionscorerequired', '', array('size' => 5));
+        $group = [];
+        $group[] =& $mform->createElement('text', 'completionscorerequired', '', ['size' => 5]);
         $group[] =& $mform->createElement('advcheckbox', 'completionscoredisabled', null, get_string('disable'));
         $mform->setType('completionscorerequired', PARAM_INT);
         $mform->addGroup($group, 'completionscoregroup', get_string('completionscorerequired', 'mod_gamoteca'), '', false);
@@ -94,8 +100,8 @@ class mod_gamoteca_mod_form extends moodleform_mod {
         $mform->setDefault('completionscorerequired', 0);
         $items[] = 'completionscoregroup';
 
-        $group = array();
-        $group[] =& $mform->createElement('text', 'completionstatusrequired', '', array('size' => 20));
+        $group = [];
+        $group[] =& $mform->createElement('text', 'completionstatusrequired', '', ['size' => 20]);
         $group[] =& $mform->createElement('advcheckbox', 'completionstatusdisabled', null, get_string('disable'));
         $mform->setType('completionstatusrequired', PARAM_CLEANHTML);
         $mform->addGroup($group, 'completionstatusgroup', get_string('completionstatusrequired', 'mod_gamoteca'), '', false);
@@ -135,7 +141,7 @@ class mod_gamoteca_mod_form extends moodleform_mod {
     /**
      * Only available on moodleform_mod.
      *
-     * @param array $default_values passed by reference
+     * @param array $defaultvalues passed by reference
      */
     public function data_preprocessing(&$defaultvalues) {
         if (!isset($defaultvalues['completionscorerequired']) || !strlen($defaultvalues['completionscorerequired'])) {

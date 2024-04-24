@@ -1,5 +1,5 @@
 <?php
-// This file is part of the Gamoteca plugin for Moodle - http://moodle.org/       
+// This file is part of the Gamoteca plugin for Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -54,22 +54,21 @@ class gamotecaupdate extends external_api {
      */
     public static function update_completion_parameters() {
         return new external_function_parameters(
-            array(
+            [
                 'games' => new external_multiple_structure(
                     new external_single_structure(
-                        array(
+                        [
                             'courseid' => new external_value(PARAM_INT, 'id of course'),
                             'gameid' => new external_value(PARAM_INT, 'id of game'),
                             'userid' => new external_value(PARAM_INT, 'id of user', VALUE_OPTIONAL),
-                            // 'userid' => new external_value(PARAM_INT, 'id of user'),
                             'email' => new external_value(PARAM_TEXT, 'email address of user', VALUE_OPTIONAL),
                             'score' => new external_value(PARAM_INT, 'game score'),
                             'status' => new external_value(PARAM_RAW, 'game status - passed, failed, etc.'),
                             'timespent' => new external_value(PARAM_RAW, 'game time'),
-                        )
+                        ]
                     )
-                )
-            )
+                ),
+            ]
         );
     }
 
@@ -82,20 +81,20 @@ class gamotecaupdate extends external_api {
     public static function update_completion($games) {
         global $DB;
 
-        $params = self::validate_parameters(self::update_completion_parameters(), array('games' => $games));
+        $params = self::validate_parameters(self::update_completion_parameters(), ['games' => $games]);
 
         foreach ($games as $game) {
-            // Check if any user identifier exists (userid or email)
-            if(!$game['userid'] && !$game['email']) {
+            // Check if any user identifier exists (userid or email).
+            if (!$game['userid'] && !$game['email']) {
                 $thisrecord['updated'] = false;
                 $thisrecord['message'] = 'User has not yet enrolled on this course';
                 continue;
             }
-            // If user ID is not given then identify by email address
-            if(!$game['userid'] && $game['email']) {
-                $userRecord = $DB->get_record('user', array('email' => $game['email']));
-                if($userRecord) {
-                    $game['userid'] = $userRecord->id;
+            // If user ID is not given then identify by email address.
+            if (!$game['userid'] && $game['email']) {
+                $userrecord = $DB->get_record('user', ['email' => $game['email']]);
+                if ($userrecord) {
+                    $game['userid'] = $userrecord->id;
                 }
             }
 
@@ -110,7 +109,7 @@ class gamotecaupdate extends external_api {
                 // Check if the module exists in the given course.
                 if ($cm = get_coursemodule_from_id('gamoteca', $game['gameid'], $game['courseid'], false)) {
                     // If user completion data exists, update else add the record.
-                    if ($record = $DB->get_record('gamoteca_data', array('userid' => $game['userid'], 'gameid' => $cm->instance))) {
+                    if ($record = $DB->get_record('gamoteca_data', ['userid' => $game['userid'], 'gameid' => $cm->instance])) {
                         $record->score = $game['score'];
                         $record->status = $game['status'];
                         $record->timespent = $game['timespent'];
@@ -135,9 +134,7 @@ class gamotecaupdate extends external_api {
                     $completion = new completion_info($course);
                     if ($completion->is_enabled() && $completion->is_enabled($cm)) {
                         gamoteca_get_completion_state($course, $cm, $game['userid'], false);
-                        //$completion->update_state($cm, $completionstate, $game['userid']);
                         $completion->update_state($cm, COMPLETION_COMPLETE, $game['userid']);
-                        //$completion->invalidatecache($gamoteca->course, $game['userid'], true);
                     }
 
                 } else {
@@ -164,19 +161,19 @@ class gamotecaupdate extends external_api {
      */
     public static function update_completion_returns() {
         return new external_function_parameters(
-            array(
+            [
                 'games' => new external_multiple_structure(
                     new external_single_structure(
-                        array(
+                        [
                             'courseid' => new external_value(PARAM_INT, 'id of course'),
                             'gameid' => new external_value(PARAM_INT, 'id of game'),
                             'userid' => new external_value(PARAM_INT, 'id of user'),
                             'updated' => new external_value(PARAM_BOOL, 'true if record was added or updated, false if error'),
                             'message' => new external_value(PARAM_RAW, 'record was added / updated or error'),
-                        )
+                        ]
                     )
-                )
-            )
+                ),
+            ]
         );
     }
 }

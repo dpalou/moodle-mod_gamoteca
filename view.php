@@ -26,7 +26,7 @@
 require(__DIR__.'/../../config.php');
 require_once(__DIR__.'/lib.php');
 
-// Course_module ID, or
+// Course_module ID, or.
 $id = optional_param('id', 0, PARAM_INT);
 
 // ... module instance id.
@@ -34,15 +34,15 @@ $g  = optional_param('g', 0, PARAM_INT);
 
 if ($id) {
     $cm             = get_coursemodule_from_id('gamoteca', $id, 0, false, MUST_EXIST);
-    $course         = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
-    $moduleinstance = $DB->get_record('gamoteca', array('id' => $cm->instance), '*', MUST_EXIST);
+    $course         = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
+    $moduleinstance = $DB->get_record('gamoteca', ['id' => $cm->instance], '*', MUST_EXIST);
 } else {
-    $moduleinstance = $DB->get_record('gamoteca', array('id' => $g), '*', MUST_EXIST);
-    $course         = $DB->get_record('course', array('id' => $moduleinstance->course), '*', MUST_EXIST);
+    $moduleinstance = $DB->get_record('gamoteca', ['id' => $g], '*', MUST_EXIST);
+    $course         = $DB->get_record('course', ['id' => $moduleinstance->course], '*', MUST_EXIST);
     $cm             = get_coursemodule_from_instance('gamoteca', $moduleinstance->id, $course->id, false, MUST_EXIST);
 }
 
 require_login($course, true, $cm);
 
-$url = new moodle_url('/course/view.php', array('id' => $course->id));
+$url = new moodle_url('/course/view.php', ['id' => $course->id]);
 redirect($url);

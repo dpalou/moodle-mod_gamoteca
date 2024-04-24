@@ -17,17 +17,17 @@
 /**
  * The task that provides a complete restore of mod_gamoteca is defined here.
  *
+ * For more information about the backup and restore process, please visit:
+ * https://docs.moodle.org/dev/Backup_2.0_for_developers
+ * https://docs.moodle.org/dev/Restore_2.0_for_developers
+ *
  * @package     mod_gamoteca
- * @category    restore
+ * @subpackage  backup-moodle2
  * @copyright   2020 Catalyst IT Europe (http://www.catalyst-eu.net/)
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
-
-// For more information about the backup and restore process, please visit:
-// https://docs.moodle.org/dev/Backup_2.0_for_developers
-// https://docs.moodle.org/dev/Restore_2.0_for_developers
 
 require_once($CFG->dirroot.'//mod/gamoteca/backup/moodle2/restore_gamoteca_stepslib.php');
 
@@ -40,7 +40,7 @@ class restore_gamoteca_activity_task extends restore_activity_task {
      * Defines particular settings that this activity can have.
      */
     protected function define_my_settings() {
-        // No particular settings for this activity
+        // No particular settings for this activity.
     }
 
     /**
@@ -57,11 +57,11 @@ class restore_gamoteca_activity_task extends restore_activity_task {
      *
      * @return array.
      */
-    static public function define_decode_contents() {
-        $contents = array();
+    public static function define_decode_contents() {
+        $contents = [];
 
         // Define the contents.
-        $contents[] = new restore_decode_content('gamoteca', array('intro'), 'gamoteca');
+        $contents[] = new restore_decode_content('gamoteca', ['intro'], 'gamoteca');
 
         return $contents;
     }
@@ -69,10 +69,10 @@ class restore_gamoteca_activity_task extends restore_activity_task {
     /**
      * Defines the decoding rules for links belonging to the activity to be executed by the link decoder.
      *
-     * @return array.
+     * @return array
      */
-    static public function define_decode_rules() {
-        $rules = array();
+    public static function define_decode_rules() {
+        $rules = [];
 
         // Define the rules.
         $rules[] = new restore_decode_rule('GAMOTECAINDEX', '/mod/gamoteca/index.php?id=$1', 'course');
@@ -82,14 +82,12 @@ class restore_gamoteca_activity_task extends restore_activity_task {
     }
 
     /**
-     * Defines the restore log rules that will be applied by the
-     * {@link restore_logs_processor} when restoring mod_gamoteca logs. It
-     * must return one array of {@link restore_log_rule} objects.
+     * Define the restoring rules for logs belonging to the activity to be executed by the link decoder.
      *
-     * @return array.
+     * @return array
      */
-    static public function define_restore_log_rules() {
-        $rules = array();
+    public static function define_restore_log_rules() {
+        $rules = [];
 
         // Define the rules.
         $rules[] = new restore_log_rule('gamoteca', 'add', 'view.php?id={course_module}', '{gamoteca}');

@@ -17,17 +17,15 @@
 /**
  * All the steps to restore mod_gamoteca are defined here.
  *
+ * For more information about the backup and restore process, please visit:
+ * https://docs.moodle.org/dev/Backup_2.0_for_developers
+ * https://docs.moodle.org/dev/Restore_2.0_for_developers
+ *
  * @package     mod_gamoteca
- * @category    restore
+ * @subpackage  backup-moodle2
  * @copyright   2020 Catalyst IT Europe (http://www.catalyst-eu.net/)
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-defined('MOODLE_INTERNAL') || die();
-
-// For more information about the backup and restore process, please visit:
-// https://docs.moodle.org/dev/Backup_2.0_for_developers
-// https://docs.moodle.org/dev/Restore_2.0_for_developers
 
 /**
  * Defines the structure step to restore one mod_gamoteca activity.
@@ -40,7 +38,7 @@ class restore_gamoteca_activity_structure_step extends restore_activity_structur
      * @return restore_path_element[].
      */
     protected function define_structure() {
-        $paths = array();
+        $paths = [];
         $userinfo = $this->get_setting_value('userinfo');
 
         $paths[] = new restore_path_element('gamoteca', '/activity/gamoteca');
@@ -53,7 +51,7 @@ class restore_gamoteca_activity_structure_step extends restore_activity_structur
 
     /**
      * Defines the structure of gamoteca table to be restored.
-     *
+     * @param object $data The data in object form
      */
     protected function process_gamoteca($data) {
         global $DB;
@@ -72,7 +70,7 @@ class restore_gamoteca_activity_structure_step extends restore_activity_structur
 
     /**
      * Defines the structure of the child table to be restored.
-     *
+     * @param object $data The data in object form
      */
     protected function process_gamoteca_data($data) {
         global $DB;

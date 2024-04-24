@@ -14,14 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * Defines {@link \mod_gamoteca\privacy\provider} class.
- *
- * @package     mod_gamoteca
- * @category    privacy
- * @copyright   2022 Gamoteca <info@gamoteca.com>
- * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
 
 namespace mod_gamoteca\privacy;
 use core_privacy\local\request\writer;
@@ -30,7 +22,16 @@ use core_privacy\local\request\contextlist;
 use core_privacy\local\request\approved_contextlist;
 use core_privacy\local\request\userlist;
 use core_privacy\local\request\approved_userlist;
+use core_privacy\local\request\helper;
 
+/**
+ * Privacy class for requesting user data.
+ *
+ * @package     mod_gamoteca
+ * @category    privacy
+ * @copyright   2024 Gamoteca <info@gamoteca.com>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class provider implements
     // This plugin does store personal user data.
     \core_privacy\local\metadata\provider,
@@ -44,7 +45,7 @@ class provider implements
      * @param collection $collection Collection of items to add metadata to.
      * @return collection Collection with our added items.
      */
-    public static function get_metadata(collection $collection) : collection {
+    public static function get_metadata(collection $collection): collection {
 
         $collection->add_database_table('gamoteca_data', [
             'id' => 'privacy:metadata:gamotecadataid',
@@ -72,7 +73,7 @@ class provider implements
      * @param int $userid The user to search.
      * @return contextlist The contextlist containing the list of contexts used in this plugin.
      */
-    public static function get_contexts_for_userid(int $userid) : contextlist {
+    public static function get_contexts_for_userid(int $userid): contextlist {
         $sql = "SELECT c.id
                   FROM {context} c
             INNER JOIN {course_modules} cm ON cm.id = c.instanceid AND c.contextlevel = :contextlevel
@@ -165,11 +166,11 @@ class provider implements
             // If we've moved to a new completion record, then write the last completion record data
             // and re-init the completion record data array.
             if ($lastcmid != $gamotecadata->cmid) {
-                if (!empty($gamotecaExportData)) {
+                if (!empty($gamotecaexportdata)) {
                     $context = \context_module::instance($lastcmid);
-                    self::export_gamoteca_data_for_user($gamotecaExportData, $context, $user);
+                    self::export_gamoteca_data_for_user($gamotecaexportdata, $context, $user);
                 }
-                $gamotecaExportData = [
+                $gamotecaexportdata = [
                     'score' => [],
                     'status' => [],
                     'timespent' => [],
@@ -177,11 +178,11 @@ class provider implements
                     'timemodified' => [],
                 ];
             }
-            $gamotecaExportData['score'][] = $gamotecadata->score;
-            $gamotecaExportData['status'][] = $gamotecadata->gamestatus;
-            $gamotecaExportData['timespent'][] = $gamotecadata->timespent;
-            $gamotecaExportData['timecreated'][] = \core_privacy\local\request\transform::datetime($gamotecadata->timecreated);
-            $gamotecaExportData['timemodified'][] = \core_privacy\local\request\transform::datetime($gamotecadata->timemodified);
+            $gamotecaexportdata['score'][] = $gamotecadata->score;
+            $gamotecaexportdata['status'][] = $gamotecadata->gamestatus;
+            $gamotecaexportdata['timespent'][] = $gamotecadata->timespent;
+            $gamotecaexportdata['timecreated'][] = \core_privacy\local\request\transform::datetime($gamotecadata->timecreated);
+            $gamotecaexportdata['timemodified'][] = \core_privacy\local\request\transform::datetime($gamotecadata->timemodified);
 
             $lastcmid = $gamotecadata->cmid;
         }
@@ -189,25 +190,25 @@ class provider implements
         $gamotecadatas->close();
 
         // The data for the last activity won't have been written yet, so make sure to write it now!
-        if (!empty($gamotecaExportData)) {
+        if (!empty($gamotecaexportdata)) {
             $context = \context_module::instance($lastcmid);
-            self::export_gamoteca_data_for_user($gamotecaExportData, $context, $user);
+            self::export_gamoteca_data_for_user($gamotecaexportdata, $context, $user);
         }
     }
 
     /**
      * Export the supplied personal data for a single gamoteca game activity, along with any generic data or area files.
      *
-     * @param array $gamotecaExportData the personal data to export for the gamoteca game.
+     * @param array $gamotecaexportdata the personal data to export for the gamoteca game.
      * @param \context_module $context the context of the gamoteca game.
      * @param \stdClass $user the user record
      */
-    protected static function export_gamoteca_data_for_user(array $gamotecaExportData, \context_module $context, \stdClass $user) {
+    protected static function export_gamoteca_data_for_user(array $gamotecaexportdata, \context_module $context, \stdClass $user) {
         // Fetch the generic module data for the gamoteca game.
         $contextdata = \core_privacy\local\request\helper::get_context_data($context, $user);
 
         // Merge with game data and write it.
-        $contextdata = (object)array_merge((array)$contextdata, $gamotecaExportData);
+        $contextdata = (object)array_merge((array)$contextdata, $gamotecaexportdata);
         writer::with_context($context)->export_data([], $contextdata);
 
         // Write generic module intro files.

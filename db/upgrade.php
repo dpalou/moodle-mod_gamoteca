@@ -23,8 +23,12 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
+/**
+ * Performs data migrations and updates on upgrade.
+ *
+ * @param int $oldversion
+ * @return bool
+ */
 function xmldb_gamoteca_upgrade($oldversion=0) {
     global $DB;
 
@@ -74,9 +78,9 @@ function xmldb_gamoteca_upgrade($oldversion=0) {
         $table->add_field('timemodified', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
 
         // Adding keys to table gamoteca_data.
-        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
-        $table->add_key('gameid', XMLDB_KEY_FOREIGN, array('gameid'), 'gamoteca', array('id'));
-        $table->add_key('userid', XMLDB_KEY_FOREIGN, array('userid'), 'user', array('id'));
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
+        $table->add_key('gameid', XMLDB_KEY_FOREIGN, ['gameid'], 'gamoteca', ['id']);
+        $table->add_key('userid', XMLDB_KEY_FOREIGN, ['userid'], 'user', ['id']);
 
         // Conditionally launch create table for gamoteca_data.
         if (!$dbman->table_exists($table)) {

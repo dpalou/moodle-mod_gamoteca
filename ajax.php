@@ -29,8 +29,8 @@ require_once(__DIR__.'/lib.php');
 $id = required_param('id', PARAM_INT);
 
 $cm             = get_coursemodule_from_id('gamoteca', $id, 0, false, MUST_EXIST);
-$course         = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
-$moduleinstance = $DB->get_record('gamoteca', array('id' => $cm->instance), '*', MUST_EXIST);
+$course         = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
+$moduleinstance = $DB->get_record('gamoteca', ['id' => $cm->instance], '*', MUST_EXIST);
 $context = context_module::instance($cm->id);
 
 require_login($course, true, $cm);

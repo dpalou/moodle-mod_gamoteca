@@ -24,30 +24,29 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-$addons = array(
-    "mod_gamoteca" => array(
-        "handlers" => array(
-            'gamoteca' => array(
-                'displaydata' => array(
+$addons = [
+    "mod_gamoteca" => [
+        "handlers" => [
+            'gamoteca' => [
+                'displaydata' => [
                     'title' => 'pluginname',
                     'icon' => $CFG->wwwroot . '/mod/gamoteca/pix/icon.png',
                     'class' => '',
-                ),
-                
+                ],
                 'delegate' => 'CoreCourseModuleDelegate',
-                'method' => 'mobile_course_view', 
-                'offlinefunctions' => array(
-                    'mobile_course_view' => array(),
-                ),
-                'styles' => array(
-                    'url' =>  '',
-                ),
-            )
-        ),
-        'lang' => array(
-            array('pluginname', 'gamoteca'),
-            array('gameotecatextmobile', 'gamoteca'),
-            array('gameotecatextmobilepost', 'gamoteca')
-        )
-    )
-);
+                'method' => 'mobile_course_view',
+                'offlinefunctions' => [
+                    'mobile_course_view' => [],
+                ],
+                'styles' => [
+                    'url' => '',
+                ],
+            ],
+        ],
+        'lang' => [
+            ['pluginname', 'gamoteca'],
+            ['gameotecatextmobile', 'gamoteca'],
+            ['gameotecatextmobilepost', 'gamoteca'],
+        ],
+    ],
+];

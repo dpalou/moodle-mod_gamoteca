@@ -26,8 +26,6 @@
  */
 namespace mod_gamoteca\event;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * gamoteca_deleted
  *
