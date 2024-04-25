@@ -43,7 +43,7 @@ The required parameter is 'games' which should be an array of arrays. The requir
 * games[0][timespent] - timespent should be string
 
 
-A Webservice [TOKEN] needs to be generated on Moodleunder (Site Administration/ Web services / Manage tokens) and securely shared with Gamoteca.
+A Webservice [TOKEN] needs to be generated on Moodle under (Site Administration/ Web services / Manage tokens) and securely shared with Gamoteca.
 
 ## License ##
 
