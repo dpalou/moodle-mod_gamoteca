@@ -19,7 +19,8 @@
  *
  * @package    mod_gamoteca
  * @category   external
- * @copyright  2020 Jackson D'souza <jackson.dsouza@catalyst-eu.net>
+ * @copyright  2024 Gamoteca <info@gamoteca.com>
+ * @copyright  based on work by 2020 Jackson D'souza <jackson.dsouza@catalyst-eu.net>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -44,7 +45,8 @@ use stdClass;
  * Webservice to update the user(s) completion status for games on Gamoteca.
  *
  * @author     Jackson D'souza <jackson.dsouza@catalyst-eu.net>
- * @copyright  2020 Catalyst IT Europe (http://www.catalyst-eu.net/)
+ * @copyright  2024 Gamoteca <info@gamoteca.com>
+ * @copyright  based on work by 2020 Catalyst IT Europe (http://www.catalyst-eu.net/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class gamotecaupdate extends external_api {

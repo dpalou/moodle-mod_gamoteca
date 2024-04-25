@@ -23,7 +23,8 @@
  *
  * @package     mod_gamoteca
  * @category    backup
- * @copyright   2020 Catalyst IT Europe (http://www.catalyst-eu.net/)
+ * @copyright   2024 Gamoteca <info@gamoteca.com>
+ * @copyright   based on work by 2020 Catalyst IT Europe (http://www.catalyst-eu.net/)
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
