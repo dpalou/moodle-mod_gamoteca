@@ -21,8 +21,13 @@
 }}
 {{=<% %>=}}
 <div>
-    <core-course-module-description description="<% gamoteca.intro %>" component="mod_gamoteca" componentId="<% cmid %>"></core-course-module-description>
-
+    <%#canusemoduleinfo%>
+        <core-course-module-info [module]="module" description="<% gamoteca.intro %>" component="mod_gamoteca" componentId="<% cmid %>" [courseId]="courseId">
+        </core-course-module-info>
+    <%/canusemoduleinfo%>
+    <%^canusemoduleinfo%>
+        <core-course-module-description description="<% gamoteca.intro %>" component="mod_gamoteca" componentId="<% cmid %>"></core-course-module-description>
+    <%/canusemoduleinfo%>
 
     <ion-item  text-center>
         <img src="<% logogamoteca %>" core-external-content component="mod_gamoteca" style="width:250px">

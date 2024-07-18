@@ -64,6 +64,7 @@ class mobile {
             'link' => $gamotecaurl,
             'cmid' => $cm->id,
             'logogamoteca' => $CFG->wwwroot . '/mod/gamoteca/pix/mobileicon.png',
+            'canusemoduleinfo' => $args->appversioncode >= 44000,
         ];
 
         return [
