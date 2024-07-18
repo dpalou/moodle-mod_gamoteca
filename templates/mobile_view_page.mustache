@@ -29,21 +29,29 @@
         <core-course-module-description description="<% gamoteca.intro %>" component="mod_gamoteca" componentId="<% cmid %>"></core-course-module-description>
     <%/canusemoduleinfo%>
 
-    <ion-item  text-center>
-        <img src="<% logogamoteca %>" core-external-content component="mod_gamoteca" style="width:250px">
+    <ion-item class="ion-text-center">
+        <ion-label>
+            <img src="<% logogamoteca %>" core-external-content component="mod_gamoteca" style="width:250px">
+        </ion-label>
     </ion-item>
-    <ion-item text-wrap text-center>
-   	    <p>
-    		{{ 'plugin.mod_gamoteca.gameotecatextmobile' | translate }}
-    	</p>
+    <ion-item class="ion-text-wrap ion-text-center">
+        <ion-label>
+            <p>
+                {{ 'plugin.mod_gamoteca.gameotecatextmobile' | translate }}
+            </p>
+        </ion-label>
     </ion-item>
-    <ion-item text-center>
-        <a href="<% link %>" target="_blank" core-link class="gamoteca-open-link">{{ 'plugin.mod_gamoteca.gameotecatextmobileopen' | translate }}</a>
+    <ion-item class="ion-text-center">
+        <ion-label>
+            <a href="<% link %>" target="_blank" core-link class="gamoteca-open-link">{{ 'plugin.mod_gamoteca.gameotecatextmobileopen' | translate }}</a>
+        </ion-label>
     </ion-item>
-    <ion-item text-wrap text-center>
-   	    <p>
-    		{{ 'plugin.mod_gamoteca.gameotecatextmobilepost' | translate }}
-    	</p>
+    <ion-item class="ion-text-wrap ion-text-center">
+        <ion-label>
+            <p>
+                {{ 'plugin.mod_gamoteca.gameotecatextmobilepost' | translate }}
+            </p>
+        </ion-label>
     </ion-item>
 
 </div>
